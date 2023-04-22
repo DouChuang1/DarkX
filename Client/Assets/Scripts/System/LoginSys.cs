@@ -43,4 +43,10 @@ public class LoginSys : SystemRoot {
         }
         loginWnd.SetWndState(false);
     }
+
+    public void RspRename(GameMsg msg)
+    {
+        GameRoot.Instance.SetPlayerName(msg.rspRename.name);
+        CreateRoleWnd.SetWndState(false);
+    }
 }

@@ -1,0 +1,12 @@
+E:\TA\DarkX\Server\Server\bin\Debug\Server.exe.config
+E:\TA\DarkX\Server\Server\bin\Debug\Server.exe
+E:\TA\DarkX\Server\Server\bin\Debug\Server.pdb
+E:\TA\DarkX\Server\Server\bin\Debug\MySql.Data.dll
+E:\TA\DarkX\Server\Server\bin\Debug\PEProtocol.dll
+E:\TA\DarkX\Server\Server\bin\Debug\PESocket.dll
+E:\TA\DarkX\Server\Server\bin\Debug\PEProtocol.pdb
+E:\TA\DarkX\Server\Server\obj\Debug\Server.csprojAssemblyReference.cache
+E:\TA\DarkX\Server\Server\obj\Debug\Server.csproj.CoreCompileInputs.cache
+E:\TA\DarkX\Server\Server\obj\Debug\Server.csproj.CopyComplete
+E:\TA\DarkX\Server\Server\obj\Debug\Server.exe
+E:\TA\DarkX\Server\Server\obj\Debug\Server.pdb

@@ -10,7 +10,7 @@ public class ServerRoot
     public void Init()
     {
         //数据库初始化 
-
+        DBMgr.Instance.Init();
         //服务
         NetSvc.Instance.Init();
         //业务

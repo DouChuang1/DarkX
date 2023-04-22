@@ -41,4 +41,34 @@ public class LoginSys
         }
         pack.SeverSession.SendMsg(msg);
     }
+
+    public void ReqRename(MsgPack pack)
+    {
+        ReqRename data = pack.GameMsg.reqRename;
+        GameMsg msg = new GameMsg
+        {
+            cmd = (int)CMD.RspRename,
+        };
+        if(CacheSvc.Instance.IsNameExist(data.name))
+        {
+            msg.err = (int)ErrCode.NameExist;
+        }
+       else
+        {
+            PlayerData playerData = CacheSvc.Instance.GetPlayerDataBySession(pack.SeverSession);
+            playerData.name = data.name;
+            if(!CacheSvc.Instance.UpdatePlayerData(playerData.id,playerData))
+            {
+                msg.err = (int)ErrCode.UpdateDBError;
+            }
+            else
+            {
+                msg.rspRename = new RspRename
+                {
+                    name = data.name
+                };
+            }
+        }
+        pack.SeverSession.SendMsg(msg);
+    }
 }

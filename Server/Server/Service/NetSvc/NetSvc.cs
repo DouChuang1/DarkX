@@ -57,6 +57,9 @@ public class NetSvc
             case CMD.ReqLogin:
                 LoginSys.Instance.ReqLogin(msg);
                 break;
+            case CMD.ReqRename:
+                LoginSys.Instance.ReqRename(msg);
+                break;
         }
     }
 }

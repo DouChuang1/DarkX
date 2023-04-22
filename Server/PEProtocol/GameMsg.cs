@@ -8,6 +8,8 @@ namespace PEProtocol
     {
         public ReqLogin reqLogin;
         public RspLogin rspLogin;
+        public ReqRename reqRename;
+        public RspRename rspRename;
     }
 
     [Serializable]
@@ -33,6 +35,17 @@ namespace PEProtocol
         public int coin;
         public int diamond;
     }
+    [Serializable]
+    public class ReqRename
+    {
+        public string name;
+    }
+
+    [Serializable]
+    public class RspRename
+    {
+        public string name;
+    }
 
 
     public enum ErrCode
@@ -40,6 +53,8 @@ namespace PEProtocol
         None = 0,
         AccIsOnline,
         WrongPass,
+        NameExist,
+        UpdateDBError,
     }
 
     public enum CMD
@@ -47,6 +62,9 @@ namespace PEProtocol
         None = 0,
         ReqLogin = 101,
         RspLogin = 102,
+
+        ReqRename=103,
+        RspRename = 104,
     }
 
     public class SrvCfg

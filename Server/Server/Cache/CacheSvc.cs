@@ -23,12 +23,34 @@ public class CacheSvc
 
     public PlayerData GetPlayerData(string acct,string pass)
     {
-        return null;
+        return DBMgr.Instance.QueryPlayerData(acct,pass);
     }
 
     public void AcctOnline(string acct,SeverSession severSession,PlayerData playerData)
     {
         onLineAcctDict.Add(acct, severSession);
         onLineSessionDict.Add(severSession, playerData);
+    }
+
+    public bool IsNameExist(string name)
+    {
+        return DBMgr.Instance.QueryNameData(name);
+    }
+
+    public PlayerData GetPlayerDataBySession(SeverSession severSession)
+    {
+        if(onLineSessionDict.TryGetValue(severSession,out PlayerData playerData))
+        {
+            return playerData;
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    public bool UpdatePlayerData(int id,PlayerData playerData)
+    {
+        return DBMgr.Instance.UpdatePlayerData(id,playerData);
     }
 }

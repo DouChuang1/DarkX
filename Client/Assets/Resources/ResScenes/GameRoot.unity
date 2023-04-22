@@ -263,6 +263,11 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114113429773365986, guid: 0de2341f5e265604abf55f28ec369c0e,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 224502538839501322, guid: 0de2341f5e265604abf55f28ec369c0e,
         type: 2}
       propertyPath: m_LocalPosition.x
@@ -378,6 +383,31 @@ Prefab:
       value: RandomName
       objectReference: {fileID: 0}
     - target: {fileID: 114770250308211468, guid: 0de2341f5e265604abf55f28ec369c0e,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 114113429773365986, guid: 0de2341f5e265604abf55f28ec369c0e,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114113429773365986, guid: 0de2341f5e265604abf55f28ec369c0e,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114113429773365986, guid: 0de2341f5e265604abf55f28ec369c0e,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 674663923}
+    - target: {fileID: 114113429773365986, guid: 0de2341f5e265604abf55f28ec369c0e,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ClickEnterBtn
+      objectReference: {fileID: 0}
+    - target: {fileID: 114113429773365986, guid: 0de2341f5e265604abf55f28ec369c0e,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine

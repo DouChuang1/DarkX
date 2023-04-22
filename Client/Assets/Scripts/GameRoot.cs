@@ -65,4 +65,9 @@ public class GameRoot : MonoBehaviour {
     {
         this.playerData = data.PlayerData;
     }
+    public void SetPlayerName(string name)
+    {
+        playerData.name = name;
+    }
+
 }

@@ -3,8 +3,10 @@ using PENet;
 using PEProtocol;
 public class SeverSession : PESession<GameMsg>
 {
+    public int sessionID = 0;
     protected override void OnConnected()
     {
+        sessionID = ServerRoot.Instance.GetSessionID();
         PECommon.Log("Client Connect");
     }
 
@@ -16,6 +18,7 @@ public class SeverSession : PESession<GameMsg>
 
     protected override void OnDisConnected()
     {
+        LoginSys.Instance.ClearOfflineData(this);
         PECommon.Log("Client Disconnect");
         
     }

@@ -43,8 +43,11 @@ public class GameRoot : MonoBehaviour {
 		LoginSys loginSys = GetComponent<LoginSys>();
 		loginSys.InitSys();
 
-		//进入登录场景
-		loginSys.EnterLogin();
+        MainCitySys mainCitySys = GetComponent<MainCitySys>();
+        mainCitySys.InitSys();
+
+        //进入登录场景
+        loginSys.EnterLogin();
 	}
 
 	public static void AddTips(string tip)

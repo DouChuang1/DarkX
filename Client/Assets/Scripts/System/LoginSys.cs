@@ -40,6 +40,7 @@ public class LoginSys : SystemRoot {
         else
         {
             //进入主城
+            MainCitySys.instance.EnterMainCity();
         }
         loginWnd.SetWndState(false);
     }
@@ -48,5 +49,6 @@ public class LoginSys : SystemRoot {
     {
         GameRoot.Instance.SetPlayerName(msg.rspRename.name);
         CreateRoleWnd.SetWndState(false);
+        MainCitySys.instance.EnterMainCity();
     }
 }

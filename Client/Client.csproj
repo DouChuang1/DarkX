@@ -13,14 +13,12 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectGenerator>VSTU</UnityProjectGenerator>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>2017.3.1f1</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <LangVersion>4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -262,6 +260,15 @@
     <Reference Include="UnityEditor.WindowsStandalone.Extensions">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2017.3.1f1/Editor/Data/PlaybackEngines/windowsstandalonesupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
+      <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/15.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
+    </Reference>
+    <Reference Include="PEProtocol">
+      <HintPath>Assets/Net/PEProtocol.dll</HintPath>
+    </Reference>
+    <Reference Include="PESocket">
+      <HintPath>Assets/Net/PESocket.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.Advertisements">
       <HintPath>C:/Users/douchuang/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.ads@2.0.3/UnityEngine.Advertisements.dll</HintPath>
     </Reference>
@@ -283,35 +290,37 @@
     <Reference Include="UnityEngine.StandardEvents">
       <HintPath>C:/Users/douchuang/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.standardevents@1.0.10/UnityEngine.StandardEvents.dll</HintPath>
     </Reference>
-    <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
-      <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/15.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
-    </Reference>
-    <Reference Include="PESocket">
-      <HintPath>Assets/Net/PESocket.dll</HintPath>
-    </Reference>
-    <Reference Include="PEProtocol">
-      <HintPath>Assets/Net/PEProtocol.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Common\BaseData.cs" />
     <Compile Include="Assets\Scripts\Common\Const.cs" />
     <Compile Include="Assets\Scripts\Common\PathDefine.cs" />
+    <Compile Include="Assets\Scripts\Common\PEListener.cs" />
     <Compile Include="Assets\Scripts\Common\PETools.cs" />
     <Compile Include="Assets\Scripts\Common\SystemRoot.cs" />
     <Compile Include="Assets\Scripts\Common\WindowRoot.cs" />
     <Compile Include="Assets\Scripts\GameRoot.cs" />
     <Compile Include="Assets\Scripts\Net\ClientSession.cs" />
+    <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Service\AudioSvc.cs" />
     <Compile Include="Assets\Scripts\Service\NetSvc.cs" />
     <Compile Include="Assets\Scripts\Service\ResSvr.cs" />
     <Compile Include="Assets\Scripts\System\LoginSys.cs" />
+    <Compile Include="Assets\Scripts\System\MainCitySys.cs" />
     <Compile Include="Assets\Scripts\UIWindow\CreateRoleWnd.cs" />
     <Compile Include="Assets\Scripts\UIWindow\DynamicWnd.cs" />
     <Compile Include="Assets\Scripts\UIWindow\LoadingWnd.cs" />
     <Compile Include="Assets\Scripts\UIWindow\LoginWnd.cs" />
+    <Compile Include="Assets\Scripts\UIWindow\MainCityWnd.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Compond\MakeChar\Shader\MogoFakeLight.shader" />
+    <None Include="Assets\Compond\MakeChar\Shader\PlayerShader.shader" />
+    <None Include="Assets\Compond\MakeScene\SceneShader\MogoTransparentDiffuse.shader" />
     <None Include="Assets\Compond\Shader\MogoSkybox.shader" />
+    <None Include="Assets\Compond\Shader\MonsterShader.shader" />
+    <None Include="Assets\Compond\Shader\Mul-skybox.shader" />
+    <None Include="Assets\Resources\ResCfgs\map.xml" />
     <None Include="Assets\Resources\ResCfgs\rdname.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

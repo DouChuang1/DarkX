@@ -21,6 +21,21 @@ namespace PEProtocol
             LogLevel logLevel = (LogLevel)tp;
             PETool.LogMsg(msg, logLevel);
         }
+
+        public static int GetFightByProps(PlayerData playerData)
+        {
+            return playerData.lv * 100 + playerData.ad + playerData.addef + playerData.apdef;
+        }
+
+        public static int GetPowerLimit(int lv)
+        {
+            return ((lv - 1) / 10) * 150 + 150;
+        }
+
+        public static int GetExpUpValByLv(int lv)
+        {
+            return 100 * lv * lv;
+        }
     }
 }
 

@@ -53,4 +53,18 @@ public class CacheSvc
     {
         return DBMgr.Instance.UpdatePlayerData(id,playerData);
     }
+
+    public void AcctOffLine(SeverSession severSession)
+    {
+        foreach(var it in onLineAcctDict)
+        {
+            if(it.Value==severSession)
+            {
+                onLineAcctDict.Remove(it.Key);
+                break;
+            }
+        }
+
+        onLineSessionDict.Remove(severSession);
+    }
 }

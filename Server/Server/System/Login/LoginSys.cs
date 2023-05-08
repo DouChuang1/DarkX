@@ -71,4 +71,9 @@ public class LoginSys
         }
         pack.SeverSession.SendMsg(msg);
     }
+
+    public void ClearOfflineData(SeverSession severSession)
+    {
+        CacheSvc.Instance.AcctOffLine(severSession);
+    }
 }

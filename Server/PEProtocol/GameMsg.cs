@@ -34,6 +34,15 @@ namespace PEProtocol
         public int power;
         public int coin;
         public int diamond;
+
+        public int hp;
+        public int ad;
+        public int ap;
+        public int addef;
+        public int apdef;
+        public int dodge;
+        public int pierce;
+        public int critical;
     }
     [Serializable]
     public class ReqRename

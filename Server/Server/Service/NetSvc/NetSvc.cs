@@ -60,6 +60,9 @@ public class NetSvc
             case CMD.ReqRename:
                 LoginSys.Instance.ReqRename(msg);
                 break;
+            case CMD.ReqGuide:
+                GuideSys.Instance.ReqGuide(msg);
+                break;
         }
     }
 }

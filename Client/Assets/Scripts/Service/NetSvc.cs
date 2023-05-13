@@ -102,6 +102,9 @@ public class NetSvc : MonoBehaviour
             case CMD.RspRename:
                 LoginSys.instance.RspRename(msg);
                 break;
+            case CMD.RspGuide:
+                MainCitySys.instance.RspGuide(msg);
+                break;
         }
     }
 }

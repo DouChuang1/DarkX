@@ -55,8 +55,10 @@
     <Compile Include="Common\ServerStart.cs" />
     <Compile Include="DB\DBMgr.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\CfgSvc\CfgSvc.cs" />
     <Compile Include="Service\NetSvc\NetSvc.cs" />
     <Compile Include="Service\NetSvc\SeverSession.cs" />
+    <Compile Include="System\Guide\GuideSystem.cs" />
     <Compile Include="System\Login\LoginSys.cs" />
   </ItemGroup>
   <ItemGroup>

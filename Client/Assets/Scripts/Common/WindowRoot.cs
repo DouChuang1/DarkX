@@ -113,4 +113,10 @@ public class WindowRoot : MonoBehaviour {
         listener.onClickUp = cb;
     }
 
+
+    public void SetSprite(Image img,string path)
+    {
+        Sprite sp = resSvr.LoadSprite(path, true);
+        img.sprite = sp;
+    }
 }

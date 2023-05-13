@@ -75,7 +75,7 @@ public class PlayerController : MonoBehaviour {
         ctrl.Move(transform.forward * Time.deltaTime * Const.PlayerMoveSpeed);
     }
 
-    private void SetCam()
+    public void SetCam()
     {
         if(camTrans!=null)
         {

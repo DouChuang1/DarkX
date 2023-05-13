@@ -60,6 +60,7 @@ public class DBMgr
                         dodge = reader.GetInt32("dodge"),
                         pierce = reader.GetInt32("pierce"),
                         critical = reader.GetInt32("critical"),
+                        guideid = reader.GetInt32("guideid"),
                     };
                 }
             }
@@ -95,6 +96,7 @@ public class DBMgr
                     dodge = 7,
                     pierce = 5,
                     critical = 2,
+                    guideid = 1001,
                 };
                 playerData.id = InsertNewAcctData(acct, pass, playerData);
             }
@@ -110,7 +112,7 @@ public class DBMgr
         {
             MySqlCommand cmd = new MySqlCommand(
                 "insert into account set acct=@acct,pass=@pass,name=@name,level=@level,exp=@exp,power=@power,coin=@coin,diamond=@diamond,"+
-                "hp=@hp,ad=@ad,ap=@ap,addef=@addef,apdef=@apdef,dodge=@dodge,pierce=@pierce,critical=@critical", conn);
+                "hp=@hp,ad=@ad,ap=@ap,addef=@addef,apdef=@apdef,dodge=@dodge,pierce=@pierce,critical=@critical,guideid=@guideid", conn);
 
             cmd.Parameters.AddWithValue("acct", acct);
             cmd.Parameters.AddWithValue("pass", pss);
@@ -128,7 +130,7 @@ public class DBMgr
             cmd.Parameters.AddWithValue("dodge", playerData.dodge);
             cmd.Parameters.AddWithValue("pierce", playerData.pierce);
             cmd.Parameters.AddWithValue("critical", playerData.critical);
-
+            cmd.Parameters.AddWithValue("guideid", playerData.guideid);
 
             cmd.ExecuteNonQuery();
             id = (int)cmd.LastInsertedId;
@@ -174,7 +176,7 @@ public class DBMgr
         try
         {
             MySqlCommand cmd = new MySqlCommand("update account set name=@name,level=@level,exp=@exp,power=@power,coin=@coin,diamond=@diamond,"+
-                "hp=@hp,ad=@ad,ap=@ap,addef=@addef,apdef=@apdef,dodge=@dodge,pierce=@pierce,critical=@critical where id = @id", conn);
+                "hp=@hp,ad=@ad,ap=@ap,addef=@addef,apdef=@apdef,dodge=@dodge,pierce=@pierce,critical=@critical,guideid=@guideid where id = @id", conn);
             cmd.Parameters.AddWithValue("id", id);
             cmd.Parameters.AddWithValue("name", playerData.name);
             cmd.Parameters.AddWithValue("level", playerData.lv);
@@ -191,6 +193,7 @@ public class DBMgr
             cmd.Parameters.AddWithValue("dodge", playerData.dodge);
             cmd.Parameters.AddWithValue("pierce", playerData.pierce);
             cmd.Parameters.AddWithValue("critical", playerData.critical);
+            cmd.Parameters.AddWithValue("guideid", playerData.guideid);
             cmd.ExecuteNonQuery();
         }
         catch(Exception e)

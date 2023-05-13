@@ -10,6 +10,8 @@ namespace PEProtocol
         public RspLogin rspLogin;
         public ReqRename reqRename;
         public RspRename rspRename;
+        public ReqGuide reqGuide;
+        public RspGuide rspGuide;
     }
 
     [Serializable]
@@ -43,6 +45,7 @@ namespace PEProtocol
         public int dodge;
         public int pierce;
         public int critical;
+        public int guideid;
     }
     [Serializable]
     public class ReqRename
@@ -56,6 +59,21 @@ namespace PEProtocol
         public string name;
     }
 
+    [Serializable]
+    public class ReqGuide
+    {
+        public int guideid;
+    }
+
+    [Serializable]
+    public class RspGuide
+    {
+        public int guideid;
+        public int coin;
+        public int lv;
+        public int exp;
+    }
+
 
     public enum ErrCode
     {
@@ -64,6 +82,7 @@ namespace PEProtocol
         WrongPass,
         NameExist,
         UpdateDBError,
+        ServerDataError,
     }
 
     public enum CMD
@@ -74,6 +93,8 @@ namespace PEProtocol
 
         ReqRename=103,
         RspRename = 104,
+        ReqGuide = 200,
+        RspGuide = 201,
     }
 
     public class SrvCfg

@@ -13,8 +13,11 @@ public class ServerRoot
         DBMgr.Instance.Init();
         //服务
         NetSvc.Instance.Init();
+        CfgSvc.Instance.Init();
         //业务
         LoginSys.Instance.Init();
+        //引导
+        GuideSys.Instance.Init();
     }
 
     public void Update()

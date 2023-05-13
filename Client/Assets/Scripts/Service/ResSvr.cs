@@ -13,6 +13,7 @@ public class ResSvr : MonoBehaviour {
 		instance= this;
 		InitRDNameCfg(PathDefine.RDNameCfg);
         InitMapCfg(PathDefine.MapCfg);
+        InitGuideCfg(PathDefine.AutoGuideCfg);
         Debug.Log("ResSvr Start");
 	}
 	private Action prgCB = null;
@@ -194,5 +195,77 @@ public class ResSvr : MonoBehaviour {
         }
 
         return go;
+    }
+
+    private Dictionary<string, Sprite> spDic = new Dictionary<string, Sprite>();
+    public Sprite LoadSprite(string path, bool cache = false)
+    {
+        Sprite sp = null;
+        if (!spDic.TryGetValue(path, out sp))
+        {
+            sp = Resources.Load<Sprite>(path);
+            if (cache)
+            {
+                spDic.Add(path, sp);
+            }
+        }
+        return sp;
+    }
+
+    private Dictionary<int, AutoGuideCfg> guideCfgDict = new Dictionary<int, AutoGuideCfg>();
+
+    private void InitGuideCfg(string path)
+    {
+        TextAsset textAsset = Resources.Load<TextAsset>(path);
+        if (textAsset != null)
+        {
+            XmlDocument xmlDocument = new XmlDocument();
+            xmlDocument.LoadXml(textAsset.text);
+
+            XmlNodeList xmlNodeList = xmlDocument.SelectSingleNode("root").ChildNodes;
+            for (int i = 0; i < xmlNodeList.Count; i++)
+            {
+                XmlElement xmlElement = xmlNodeList[i] as XmlElement;
+                if (xmlElement.GetAttributeNode("ID") == null)
+                    continue;
+                int ID = Convert.ToInt32(xmlElement.GetAttributeNode("ID").InnerText);
+                AutoGuideCfg agCfg = new AutoGuideCfg
+                {
+                    ID = ID
+                };
+                foreach (XmlElement e in xmlElement.ChildNodes)
+                {
+                    switch (e.Name)
+                    {
+                        case "npcID":
+                            agCfg.npcID = int.Parse(e.InnerText);
+                            break;
+                        case "dilogArr":
+                            agCfg.dilogArr = e.InnerText;
+                            break;
+                        case "actID":
+                            agCfg.actID = int.Parse(e.InnerText);
+                            break;
+                        case "coin":
+                            agCfg.coin = int.Parse(e.InnerText);
+                            break;
+                        case "exp":
+                            agCfg.exp = int.Parse(e.InnerText);
+                            break;
+                    }
+                }
+                guideCfgDict.Add(ID, agCfg);
+            }
+        }
+    }
+
+    public AutoGuideCfg GetAutoGuideData(int id)
+    {
+        AutoGuideCfg agc = null;
+        if(guideCfgDict.TryGetValue(id,out agc))
+        {
+            return agc;
+        }
+        return null;
     }
 }

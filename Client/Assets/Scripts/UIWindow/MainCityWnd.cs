@@ -26,6 +26,8 @@ public class MainCityWnd : WindowRoot {
     private Vector2 defaultPos;
     private float pointDis;
 
+    private AutoGuideCfg AutoGuideCfg;
+    public Button buttonGuide;
     public override void InitWnd()
     {
         base.InitWnd();
@@ -36,7 +38,7 @@ public class MainCityWnd : WindowRoot {
         RefreshUI();
     }
 
-    private void RefreshUI()
+    public void RefreshUI()
     {
         PlayerData playerData = GameRoot.Instance.PlayerData;
         SetText(txtFight, PECommon.GetFightByProps(playerData));
@@ -66,6 +68,55 @@ public class MainCityWnd : WindowRoot {
             {
                 img.fillAmount = 0;
             }
+        }
+
+        AutoGuideCfg = resSvr.GetAutoGuideData(playerData.guideid);
+        if(AutoGuideCfg!=null)
+        {
+            SetGuideBtnIcon(AutoGuideCfg.npcID);
+        }
+        else
+        {
+            SetGuideBtnIcon(-1);
+        }
+    }
+
+    void SetGuideBtnIcon(int npcID)
+    {
+        string spPath = "";
+        Image Img = buttonGuide.GetComponent<Image>();
+
+        switch(npcID)
+        {
+            case Const.NPCWiseMan:
+                spPath = PathDefine.WiseManHead;
+                break;
+            case Const.NPCGeneral:
+                spPath = PathDefine.GeneralHead;
+                break;
+            case Const.NPCArtisan:
+                spPath = PathDefine.ArtisanHead;
+                break;
+            case Const.NPCTrader:
+                spPath = PathDefine.TraderHead;
+                break;
+            default:
+                spPath = PathDefine.TaskHead;
+                break;
+        }
+        SetSprite(Img, spPath);
+    }
+
+    public void ClickGuideBtn()
+    {
+        AudioSvc.Instance.PlayUIAudio(Const.UIClickBtn);
+        if(AutoGuideCfg!=null)
+        {
+            MainCitySys.instance.RunTask(AutoGuideCfg);
+        }
+        else
+        {
+            GameRoot.AddTips("引导结束");
         }
     }
 
@@ -99,6 +150,12 @@ public class MainCityWnd : WindowRoot {
             clip = menuAni.GetClip("CloseMCMenu");
         }
         menuAni.Play(clip.name);
+    }
+
+    public void ClickHeadBtn()
+    {
+        AudioSvc.Instance.PlayUIAudio(Const.UIOpenBtn);
+        MainCitySys.instance.OpenInfoWnd();
     }
 
     public void RegisterTouchEvts()

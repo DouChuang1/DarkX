@@ -1,13 +1,50 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+public enum TxtColor
+{
+    Red,
+    Green,
+    Blue,
+    Yellow
+}
+
 
 public class Const  {
+    private const string ColorRed = "<color=#FF0000FF>";
+    private const string ColorGreen = "<color=#00FF00FF>";
+    private const string ColorBlue = "<color=#00B4FFFF>";
+    private const string ColorYellow = "<color=#FFFF00FF>";
+    private const string ColorEnd = "</color>";
 
-	public const string SceneLogin = "SceneLogin";
+    public static string Color(string str, TxtColor c)
+    {
+        string result = "";
+        switch (c)
+        {
+            case TxtColor.Red:
+                result = ColorRed + str + ColorEnd;
+                break;
+            case TxtColor.Green:
+                result = ColorGreen + str + ColorEnd;
+                break;
+            case TxtColor.Blue:
+                result = ColorBlue + str + ColorEnd;
+                break;
+            case TxtColor.Yellow:
+                result = ColorYellow + str + ColorEnd;
+                break;
+        }
+        return result;
+    }
+
+
+
+    public const string SceneLogin = "SceneLogin";
 	public const string BGLogin = "bgLogin";
     public const string BGMainCity = "bgMainCity";
     public const string UIExtenBtn = "uiExtenBtn";
+    public const string UIOpenBtn = "uiOpenPage";
 
     public const string UILogin = "uiLoginBtn";
 
@@ -28,4 +65,9 @@ public class Const  {
     public const int BlendWalk = 1;
 
     public const int MainCityMapID = 10000;
+
+    public const int NPCWiseMan = 0;
+    public const int NPCGeneral = 1;
+    public const int NPCArtisan = 2;
+    public const int NPCTrader = 3;
 }

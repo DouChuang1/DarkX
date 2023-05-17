@@ -60,6 +60,7 @@
     <Compile Include="Service\NetSvc\SeverSession.cs" />
     <Compile Include="System\Guide\GuideSystem.cs" />
     <Compile Include="System\Login\LoginSys.cs" />
+    <Compile Include="System\Strong\StrongSys.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

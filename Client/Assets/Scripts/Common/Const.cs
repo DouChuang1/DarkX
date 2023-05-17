@@ -49,6 +49,7 @@ public class Const  {
     public const string UILogin = "uiLoginBtn";
 
 	public const string UIClickBtn = "uiClickBtn";
+    public const string FBEnter = "fbitem";
 
     public const string SceneMainCity = "SceneMainCity";
 

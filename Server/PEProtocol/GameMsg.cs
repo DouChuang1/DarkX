@@ -12,6 +12,8 @@ namespace PEProtocol
         public RspRename rspRename;
         public ReqGuide reqGuide;
         public RspGuide rspGuide;
+        public ReqStrong reqStrong;
+        public RspStrong rspStrong;
     }
 
     [Serializable]
@@ -36,6 +38,7 @@ namespace PEProtocol
         public int power;
         public int coin;
         public int diamond;
+        public int crystal;
 
         public int hp;
         public int ad;
@@ -46,6 +49,7 @@ namespace PEProtocol
         public int pierce;
         public int critical;
         public int guideid;
+        public int[] strong;
     }
     [Serializable]
     public class ReqRename
@@ -74,6 +78,25 @@ namespace PEProtocol
         public int exp;
     }
 
+    [Serializable]
+    public class ReqStrong
+    {
+        public int pos;
+    }
+
+    [Serializable]
+    public class RspStrong
+    {
+        public int coin;
+        public int crystal;
+        public int hp;
+        public int ad;
+        public int ap;
+        public int addef;
+        public int apdef;
+        public int[] strongArr;
+    }
+
 
     public enum ErrCode
     {
@@ -83,6 +106,9 @@ namespace PEProtocol
         NameExist,
         UpdateDBError,
         ServerDataError,
+        LackLevel,
+        LackCoin,
+        LackCrystal
     }
 
     public enum CMD
@@ -95,6 +121,8 @@ namespace PEProtocol
         RspRename = 104,
         ReqGuide = 200,
         RspGuide = 201,
+        ReqStrong = 202,
+        RspStrong = 203,
     }
 
     public class SrvCfg

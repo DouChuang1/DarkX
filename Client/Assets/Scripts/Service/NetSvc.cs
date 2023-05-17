@@ -90,6 +90,18 @@ public class NetSvc : MonoBehaviour
                 case ErrCode.WrongPass:
                     GameRoot.AddTips("密码错误");
                     break;
+                case ErrCode.LackLevel:
+                    GameRoot.AddTips("级别不够");
+                    break;
+                case ErrCode.LackCoin:
+                    GameRoot.AddTips("金币不足");
+                    break;
+                case ErrCode.LackCrystal:
+                    GameRoot.AddTips("水晶不足");
+                    break;
+                case ErrCode.UpdateDBError:
+                    GameRoot.AddTips("更新数据库错误");
+                    break;
             }
             return;
         }
@@ -104,6 +116,9 @@ public class NetSvc : MonoBehaviour
                 break;
             case CMD.RspGuide:
                 MainCitySys.instance.RspGuide(msg);
+                break;
+            case CMD.RspStrong:
+                MainCitySys.instance.RspStrong(msg);
                 break;
         }
     }

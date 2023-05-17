@@ -113,10 +113,18 @@ public class WindowRoot : MonoBehaviour {
         listener.onClickUp = cb;
     }
 
+    protected void OnClick(GameObject go, Action<object> cb,object arg)
+    {
+        PEListener listener = GetOrAddComponect<PEListener>(go);
+        listener.onClick = cb;
+        listener.args = arg;
+    }
+
 
     public void SetSprite(Image img,string path)
     {
         Sprite sp = resSvr.LoadSprite(path, true);
         img.sprite = sp;
     }
+
 }

@@ -194,4 +194,10 @@ public class MainCityWnd : WindowRoot {
             //传递方向信息
         });
     }
+
+    public void OpenStrongWnd()
+    {
+        audioSvc.PlayUIAudio(Const.UIClickBtn);
+        MainCitySys.instance.StrongWnd.SetWndState(true);
+    }
 }

@@ -18,6 +18,7 @@ public class ServerRoot
         LoginSys.Instance.Init();
         //引导
         GuideSys.Instance.Init();
+        StrongSys.Instance.Init();
     }
 
     public void Update()

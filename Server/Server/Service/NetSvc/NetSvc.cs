@@ -63,6 +63,9 @@ public class NetSvc
             case CMD.ReqGuide:
                 GuideSys.Instance.ReqGuide(msg);
                 break;
+            case CMD.ReqStrong:
+                StrongSys.Instance.ReqStrong(msg);
+                break;
         }
     }
 }

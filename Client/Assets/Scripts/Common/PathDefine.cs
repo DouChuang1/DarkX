@@ -8,6 +8,10 @@ public class PathDefine  {
     public const string MapCfg = "ResCfgs/map";
 
     public const string AutoGuideCfg = "ResCfgs/guide";
+    public const string StrongCfg = "ResCfgs/strong";
+
+    public const string ItemArrowBG = "ResImages/btnstrong";
+    public const string ItemPlatBG = "ResImages/charbg3";
 
     public const string AssissnCityPlayerPrefab = "PrefabPlayer/AssassinCity";
 
@@ -23,4 +27,14 @@ public class PathDefine  {
     public const string GeneralIcon = "ResImages/npc1";
     public const string ArtisanIcon = "ResImages/npc2";
     public const string TraderIcon = "ResImages/npc3";
+
+    public const string ItemToukui = "ResImages/toukui";
+    public const string ItemBody = "ResImages/body";
+    public const string ItemYaobu = "ResImages/yaobu";
+    public const string ItemHand = "ResImages/hand";
+    public const string ItemLeg = "ResImages/leg";
+    public const string ItemFoot = "ResImages/foot";
+
+    public const string SpStar1 = "ResImages/star1";
+    public const string SpStar2 = "ResImages/star2";
 }

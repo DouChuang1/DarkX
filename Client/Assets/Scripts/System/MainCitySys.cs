@@ -8,6 +8,7 @@ public class MainCitySys : SystemRoot {
 
     public MainCityWnd MainCityWnd;
     public GuideWnd GuideWnd;
+    public StrongWnd StrongWnd;
     public InfoWnd InfoWnd;
     public static MainCitySys instance;
     private PlayerController PlayerController;
@@ -207,6 +208,17 @@ public class MainCitySys : SystemRoot {
         }
 
         GameRoot.Instance.SetPlayerDataByGuide(data);
+        MainCityWnd.RefreshUI();
+    }
+
+    public void RspStrong(GameMsg msg)
+    {
+        int zhanliPre = PECommon.GetFightByProps(GameRoot.Instance.PlayerData);
+        GameRoot.Instance.SetPlayerDataByStrong(msg.rspStrong);
+        int zhanliNow = PECommon.GetFightByProps(GameRoot.Instance.PlayerData);
+        GameRoot.AddTips(Const.Color("战力提升 " + (zhanliNow - zhanliPre), TxtColor.Blue));
+
+        StrongWnd.UpdateUI();
         MainCityWnd.RefreshUI();
     }
 }

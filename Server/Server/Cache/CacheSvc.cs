@@ -67,4 +67,14 @@ public class CacheSvc
 
         onLineSessionDict.Remove(severSession);
     }
+
+    public List<SeverSession> GetOnlineServerSessions()
+    {
+        List<SeverSession> lst = new List<SeverSession>();
+        foreach(var it in onLineSessionDict)
+        {
+            lst.Add(it.Key);
+        }
+        return lst;
+    }
 }

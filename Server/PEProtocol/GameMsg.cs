@@ -14,6 +14,8 @@ namespace PEProtocol
         public RspGuide rspGuide;
         public ReqStrong reqStrong;
         public RspStrong rspStrong;
+        public SndChat sndChat;
+        public PshChat pshChat;
     }
 
     [Serializable]
@@ -97,6 +99,18 @@ namespace PEProtocol
         public int[] strongArr;
     }
 
+    [Serializable]
+    public class SndChat
+    {
+        public string chat;
+    }
+    [Serializable]
+    public class PshChat
+    {
+        public string name;
+        public string chat;
+    }
+
 
     public enum ErrCode
     {
@@ -123,6 +137,9 @@ namespace PEProtocol
         RspGuide = 201,
         ReqStrong = 202,
         RspStrong = 203,
+
+        SndChat = 204,
+        pshChat = 205,
     }
 
     public class SrvCfg

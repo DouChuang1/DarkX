@@ -1,4 +1,5 @@
 ﻿using PEProtocol;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,7 @@ public class MainCitySys : SystemRoot {
     public GuideWnd GuideWnd;
     public StrongWnd StrongWnd;
     public InfoWnd InfoWnd;
+    public ChatWnd ChatWnd;
     public static MainCitySys instance;
     private PlayerController PlayerController;
     private Transform charCamTrans;
@@ -99,6 +101,12 @@ public class MainCitySys : SystemRoot {
     }
 
     private float startRotate = 0;
+
+    internal void PshChat(GameMsg msg)
+    {
+        ChatWnd.AddChatMsg(msg.pshChat.name, msg.pshChat.chat);
+    }
+
     public void SetStartRotate()
     {
         startRotate = PlayerController.transform.localEulerAngles.y;
@@ -154,6 +162,12 @@ public class MainCitySys : SystemRoot {
             OpenGuideWnd();
         }
     }
+
+    internal void OpenChatWnd()
+    {
+        ChatWnd.SetWndState(true);
+    }
+
     private void StopNavTask()
     {
         if (isNavGuide)

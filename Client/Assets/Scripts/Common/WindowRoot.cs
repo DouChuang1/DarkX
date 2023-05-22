@@ -40,6 +40,11 @@ public class WindowRoot : MonoBehaviour {
         netSvc = null;
 	}
 
+    public bool GetWndState()
+    {
+        return gameObject.activeSelf;
+    }
+
 	protected void SetText(Text text,string context="")
 	{
 		text.text = context;

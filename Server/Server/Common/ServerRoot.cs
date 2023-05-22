@@ -19,6 +19,7 @@ public class ServerRoot
         //引导
         GuideSys.Instance.Init();
         StrongSys.Instance.Init();
+        ChatSys.Instance.Init();
     }
 
     public void Update()

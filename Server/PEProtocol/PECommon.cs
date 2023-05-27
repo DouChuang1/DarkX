@@ -36,6 +36,10 @@ namespace PEProtocol
         {
             return 100 * lv * lv;
         }
+
+        public static int PowerAddSpace = 5;
+        public static int PowerAddCount = 2;
+
     }
 }
 

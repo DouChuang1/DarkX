@@ -58,8 +58,13 @@
     <Compile Include="Service\CfgSvc\CfgSvc.cs" />
     <Compile Include="Service\NetSvc\NetSvc.cs" />
     <Compile Include="Service\NetSvc\SeverSession.cs" />
+    <Compile Include="Service\Timer\PETimer.cs" />
+    <Compile Include="Service\Timer\TimerSvc.cs" />
+    <Compile Include="System\Buy\BuySys.cs" />
+    <Compile Include="System\Chat\ChatSys.cs" />
     <Compile Include="System\Guide\GuideSystem.cs" />
     <Compile Include="System\Login\LoginSys.cs" />
+    <Compile Include="System\Power\PowerSys.cs" />
     <Compile Include="System\Strong\StrongSys.cs" />
   </ItemGroup>
   <ItemGroup>

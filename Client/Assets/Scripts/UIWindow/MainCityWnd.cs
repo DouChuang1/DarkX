@@ -36,6 +36,9 @@ public class MainCityWnd : WindowRoot {
         SetActive(imagDirPoint, false);
         RegisterTouchEvts();
         RefreshUI();
+
+        //TimerSvc.Instance.AddTimeTask((int id) =>
+        //{ Debug.LogError("Test"); }, 1000);
     }
 
     public void RefreshUI()
@@ -206,4 +209,16 @@ public class MainCityWnd : WindowRoot {
         audioSvc.PlayUIAudio(Const.UIClickBtn);
         MainCitySys.instance.StrongWnd.SetWndState(true);
     }
+    public void ClickBuyPowerBtn()
+    {
+        audioSvc.PlayUIAudio(Const.UIClickBtn);
+        MainCitySys.instance.OpenBuyWnd(0);
+    }
+
+    public void OpenMKCoinBtn()
+    {
+        audioSvc.PlayUIAudio(Const.UIClickBtn);
+        MainCitySys.instance.OpenBuyWnd(1);
+    }
+
 }

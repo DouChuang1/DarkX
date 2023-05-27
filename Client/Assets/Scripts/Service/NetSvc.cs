@@ -120,6 +120,12 @@ public class NetSvc : MonoBehaviour
             case CMD.pshChat:
                 MainCitySys.instance.PshChat(msg);
                 break;
+            case CMD.RspBuy:
+                MainCitySys.instance.RspBuy(msg);
+                break;
+            case CMD.PshPower:
+                MainCitySys.instance.PshPower(msg);
+                break;
         }
     }
 }

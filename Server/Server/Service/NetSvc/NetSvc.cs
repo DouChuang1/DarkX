@@ -69,6 +69,9 @@ public class NetSvc
             case CMD.SndChat:
                 ChatSys.Instance.SndChat(msg);
                 break;
+            case CMD.ReqBuy:
+                BuySys.Instance.ReqBuy(msg);
+                break;
         }
     }
 }

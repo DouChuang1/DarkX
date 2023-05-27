@@ -62,6 +62,7 @@ public class DBMgr
                         critical = reader.GetInt32("critical"),
                         guideid = reader.GetInt32("guideid"),
                         crystal = reader.GetInt32("crystal"),
+                        time = reader.GetInt64("time"),
                     };
                     string[] strongStrArr = reader.GetString("strong").Split('#');
                     int[] _stringArr = new int[6];
@@ -106,7 +107,7 @@ public class DBMgr
                     power = 150,
                     coin = 5000,
                     diamond = 500,
-
+                    time = TimerSvc.Instance.GetNow(),
                     hp = 2000,
                     ad = 275,
                     ap = 265,
@@ -133,7 +134,7 @@ public class DBMgr
         {
             MySqlCommand cmd = new MySqlCommand(
                 "insert into account set acct=@acct,pass=@pass,name=@name,level=@level,exp=@exp,power=@power,coin=@coin,diamond=@diamond,crystal=@crystal," +
-                "hp=@hp,ad=@ad,ap=@ap,addef=@addef,apdef=@apdef,dodge=@dodge,pierce=@pierce,critical=@critical,guideid=@guideid,strong=@strong", conn);
+                "hp=@hp,ad=@ad,ap=@ap,addef=@addef,apdef=@apdef,dodge=@dodge,pierce=@pierce,critical=@critical,guideid=@guideid,strong=@strong,time=@time", conn);
 
             cmd.Parameters.AddWithValue("acct", acct);
             cmd.Parameters.AddWithValue("pass", pss);
@@ -161,7 +162,7 @@ public class DBMgr
                 strongInfo += "#";
             }
             cmd.Parameters.AddWithValue("strong", strongInfo);
-
+            cmd.Parameters.AddWithValue("time", playerData.time);
             cmd.ExecuteNonQuery();
             id = (int)cmd.LastInsertedId;
         }
@@ -206,7 +207,7 @@ public class DBMgr
         try
         {
             MySqlCommand cmd = new MySqlCommand("update account set name=@name,level=@level,exp=@exp,power=@power,coin=@coin,diamond=@diamond,crystal=@crystal," +
-                "hp=@hp,ad=@ad,ap=@ap,addef=@addef,apdef=@apdef,dodge=@dodge,pierce=@pierce,critical=@critical,guideid=@guideid,strong=@strong where id = @id", conn);
+                "hp=@hp,ad=@ad,ap=@ap,addef=@addef,apdef=@apdef,dodge=@dodge,pierce=@pierce,time=@time,critical=@critical,guideid=@guideid,strong=@strong where id = @id", conn);
             cmd.Parameters.AddWithValue("id", id);
             cmd.Parameters.AddWithValue("name", playerData.name);
             cmd.Parameters.AddWithValue("level", playerData.lv);
@@ -232,6 +233,7 @@ public class DBMgr
                 strongInfo += "#";
             }
             cmd.Parameters.AddWithValue("strong", strongInfo);
+            cmd.Parameters.AddWithValue("time", playerData.time);
             cmd.ExecuteNonQuery();
         }
         catch(Exception e)

@@ -14,17 +14,21 @@ public class ServerRoot
         //服务
         NetSvc.Instance.Init();
         CfgSvc.Instance.Init();
+        TimerSvc.Instance.Init();
         //业务
         LoginSys.Instance.Init();
         //引导
         GuideSys.Instance.Init();
         StrongSys.Instance.Init();
         ChatSys.Instance.Init();
+        BuySys.Instance.Init();
+        PowerSys.Instance.Init();
     }
 
     public void Update()
     {
         NetSvc.Instance.Update();
+        TimerSvc.Instance.Update();
     }
 
     private int seeesionId = 0;

@@ -12,6 +12,7 @@ public class MainCitySys : SystemRoot {
     public StrongWnd StrongWnd;
     public InfoWnd InfoWnd;
     public ChatWnd ChatWnd;
+    public BuyWnd BuyWnd;
     public static MainCitySys instance;
     private PlayerController PlayerController;
     private Transform charCamTrans;
@@ -105,6 +106,15 @@ public class MainCitySys : SystemRoot {
     internal void PshChat(GameMsg msg)
     {
         ChatWnd.AddChatMsg(msg.pshChat.name, msg.pshChat.chat);
+    }
+
+    internal void RspBuy(GameMsg msg)
+    {
+        RspBuy data = msg.rspBuy;
+        GameRoot.Instance.SetPlayerDataByBuy(data);
+        GameRoot.AddTips("购买成功");
+        MainCityWnd.RefreshUI();
+        BuyWnd.SetWndState(false);
     }
 
     public void SetStartRotate()
@@ -234,5 +244,23 @@ public class MainCitySys : SystemRoot {
 
         StrongWnd.UpdateUI();
         MainCityWnd.RefreshUI();
+    }
+
+    public void OpenBuyWnd(int type)
+    {
+        BuyWnd.SetBuyType(type);
+        BuyWnd.SetWndState(true);
+    }
+
+    public void PshPower(GameMsg msg)
+    {
+        PshPower data = msg.pshPower;
+        GameRoot.Instance.SetPlayerDataByPower(data);
+
+        if(MainCityWnd.GetWndState())
+        {
+            MainCityWnd.RefreshUI();
+        }
+        
     }
 }

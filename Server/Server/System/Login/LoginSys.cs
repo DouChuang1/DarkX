@@ -35,6 +35,26 @@ public class LoginSys
             }
             else
             {
+                int power = playerData.power;
+                long now = TimerSvc.Instance.GetNow();
+                long milliseconds = now - playerData.time;
+                int addPower = (int)(milliseconds / (1000 * 60 * PECommon.PowerAddSpace) * PECommon.PowerAddCount);
+                if(addPower>0)
+                {
+                    int powMax = PECommon.GetPowerLimit(playerData.lv);
+                    if(playerData.power<powMax)
+                    {
+                        playerData.power += addPower;
+                        if(playerData.power>powMax)
+                        {
+                            playerData.power = powMax;
+                        }
+                    }
+                }
+                if(power!=playerData.power)
+                {
+                    CacheSvc.Instance.UpdatePlayerData(playerData.id, playerData);
+                }
                 msg.rspLogin = new RspLogin { PlayerData = playerData};
                 CacheSvc.Instance.AcctOnline(reqLogin.acct, pack.SeverSession, playerData);
             }
@@ -74,6 +94,15 @@ public class LoginSys
 
     public void ClearOfflineData(SeverSession severSession)
     {
+        PlayerData pd = CacheSvc.Instance.GetPlayerDataBySession(severSession);
+        if(pd!=null)
+        {
+            pd.time = TimerSvc.Instance.GetNow();
+            if(!CacheSvc.Instance.UpdatePlayerData(pd.id,pd))
+            {
+
+            }
+        }
         CacheSvc.Instance.AcctOffLine(severSession);
     }
 }

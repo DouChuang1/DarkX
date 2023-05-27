@@ -34,6 +34,9 @@ public class GameRoot : MonoBehaviour {
 		ResSvr res = GetComponent<ResSvr>();
 		res.Init();
 
+        TimerSvc timerSvc = GetComponent<TimerSvc>();
+        timerSvc.InitSvc();
+
         NetSvc netSvc = GetComponent<NetSvc>();
         netSvc.InitSvc();
 
@@ -91,6 +94,17 @@ public class GameRoot : MonoBehaviour {
         playerData.addef = data.addef;
         playerData.apdef = data.apdef;
         playerData.strong = data.strongArr;
+    }
+
+    public void SetPlayerDataByBuy(RspBuy data)
+    {
+        playerData.coin = data.coin;
+        playerData.power = data.power;
+        playerData.diamond = data.diamond;
+    }
+    public void SetPlayerDataByPower(PshPower data)
+    {
+        playerData.power = data.power;
     }
 
 }

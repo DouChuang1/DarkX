@@ -16,6 +16,10 @@ namespace PEProtocol
         public RspStrong rspStrong;
         public SndChat sndChat;
         public PshChat pshChat;
+
+        public ReqBuy reqBuy;
+        public RspBuy rspBuy;
+        public PshPower pshPower;
     }
 
     [Serializable]
@@ -52,6 +56,7 @@ namespace PEProtocol
         public int critical;
         public int guideid;
         public int[] strong;
+        public long time;
     }
     [Serializable]
     public class ReqRename
@@ -110,6 +115,27 @@ namespace PEProtocol
         public string name;
         public string chat;
     }
+    [Serializable]
+    public class PshPower
+    {
+        public int power;
+    }
+
+    [Serializable]
+    public class ReqBuy
+    {
+        public int type;
+        public int cost;
+    }
+
+    [Serializable]
+    public class RspBuy
+    {
+        public int type;
+        public int diamond;
+        public int coin;
+        public int power;
+    }
 
 
     public enum ErrCode
@@ -122,7 +148,8 @@ namespace PEProtocol
         ServerDataError,
         LackLevel,
         LackCoin,
-        LackCrystal
+        LackCrystal,
+        LackDiamond
     }
 
     public enum CMD
@@ -140,6 +167,11 @@ namespace PEProtocol
 
         SndChat = 204,
         pshChat = 205,
+
+        ReqBuy = 206,
+        RspBuy = 207,
+
+        PshPower = 208,
     }
 
     public class SrvCfg

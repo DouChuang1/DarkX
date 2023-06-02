@@ -126,6 +126,12 @@ public class NetSvc : MonoBehaviour
             case CMD.PshPower:
                 MainCitySys.instance.PshPower(msg);
                 break;
+            case CMD.RspTakeTaskReward:
+                MainCitySys.instance.RspTakeTaskReward(msg);
+                break;
+            case CMD.PshTaskPrgs:
+                MainCitySys.instance.PshTaskPrgs(msg);
+                break;
         }
     }
 }

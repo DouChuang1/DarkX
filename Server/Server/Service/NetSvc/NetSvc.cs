@@ -72,6 +72,9 @@ public class NetSvc
             case CMD.ReqBuy:
                 BuySys.Instance.ReqBuy(msg);
                 break;
+            case CMD.ReqTakeTaskReward:
+                TaskSys.Instance.ReqTaskTaskReward(msg);
+                break;
         }
     }
 }

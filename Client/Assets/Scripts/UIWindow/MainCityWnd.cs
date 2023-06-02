@@ -166,6 +166,12 @@ public class MainCityWnd : WindowRoot {
         MainCitySys.instance.OpenChatWnd();
     }
 
+    public void ClickTaskBtn()
+    {
+        AudioSvc.Instance.PlayUIAudio(Const.UIOpenBtn);
+        MainCitySys.instance.OpenTaskRewardWnd();
+    }
+
 
     public void RegisterTouchEvts()
     {

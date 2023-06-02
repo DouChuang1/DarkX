@@ -44,6 +44,7 @@ public class StrongSys
         }
         else
         {
+            TaskSys.Instance.CalcTaskPrgs(pd, 3);
             pd.coin -= nextSd.coin;
             pd.crystal -= nextSd.crystal;
             pd.strong[data.pos] += 1;

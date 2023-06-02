@@ -29,9 +29,13 @@ public class GuideSys
 
         if(pd.guideid==reqGuide.guideid)
         {
+            if(pd.guideid==1001)
+            {
+                TaskSys.Instance.CalcTaskPrgs(pd, 1);
+            }
             pd.guideid += 1;
             pd.coin += CfgSvc.Instance.GetGuideCfg(reqGuide.guideid).coin;
-            CalcExp(pd, CfgSvc.Instance.GetGuideCfg(reqGuide.guideid).exp);
+            PECommon.CalcExp(pd, CfgSvc.Instance.GetGuideCfg(reqGuide.guideid).exp);
             if(!CacheSvc.Instance.UpdatePlayerData(pd.id,pd))
             {
                 msg.err = (int)ErrCode.UpdateDBError;
@@ -56,26 +60,4 @@ public class GuideSys
         pack.SeverSession.SendMsg(msg);
     }
 
-    public void CalcExp(PlayerData pd,int addExp)
-    {
-        int curLv = pd.lv;
-        int curExp = pd.exp;
-        int addRestExp = addExp;
-        while(true)
-        {
-            int upNeedUpExp = PECommon.GetExpUpValByLv(curLv) - curExp;
-            if(addRestExp>=upNeedUpExp)
-            {
-                curLv += 1;
-                curExp = 0;
-                addRestExp -= upNeedUpExp;
-            }
-            else
-            {
-                pd.lv = curLv;
-                pd.exp = curExp + addRestExp;
-                break;
-            }
-        }
-    }
 }

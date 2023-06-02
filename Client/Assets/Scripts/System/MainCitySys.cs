@@ -13,6 +13,7 @@ public class MainCitySys : SystemRoot {
     public InfoWnd InfoWnd;
     public ChatWnd ChatWnd;
     public BuyWnd BuyWnd;
+    public TaskWnd TaskWnd;
     public static MainCitySys instance;
     private PlayerController PlayerController;
     private Transform charCamTrans;
@@ -262,5 +263,26 @@ public class MainCitySys : SystemRoot {
             MainCityWnd.RefreshUI();
         }
         
+    }
+
+    public void OpenTaskRewardWnd()
+    {
+        TaskWnd.SetWndState(true);
+    }
+
+    public void RspTakeTaskReward(GameMsg msg)
+    {
+        RspTakeTaskReward data = msg.rspTakeTaskReward;
+        GameRoot.Instance.SetPlayerDataByTask(data);
+
+        TaskWnd.RefreshUI();
+        MainCityWnd.RefreshUI();
+    }
+
+    public void PshTaskPrgs(GameMsg msg)
+    {
+        PshTaskPrgs data = msg.pshTaskPrgs;
+        GameRoot.Instance.SetPlayerDataByTask(data);
+        //TaskWnd.RefreshUI();
     }
 }

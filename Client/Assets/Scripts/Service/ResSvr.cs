@@ -16,6 +16,7 @@ public class ResSvr : MonoBehaviour {
         InitMapCfg(PathDefine.MapCfg);
         InitGuideCfg(PathDefine.AutoGuideCfg);
         InitStrongCfg(PathDefine.StrongCfg);
+        InitTaskRewardCfg(PathDefine.TaskRewardCfg);
         Debug.Log("ResSvr Start");
 	}
 	private Action prgCB = null;
@@ -389,4 +390,58 @@ public class ResSvr : MonoBehaviour {
         }
         return val;
     }
+    private Dictionary<int, TaskRewardCfg> taskRewardDict = new Dictionary<int, TaskRewardCfg>();
+
+    private void InitTaskRewardCfg(string path)
+    {
+        TextAsset textAsset = Resources.Load<TextAsset>(path);
+        if (textAsset != null)
+        {
+            XmlDocument xmlDocument = new XmlDocument();
+            xmlDocument.LoadXml(textAsset.text);
+
+            XmlNodeList xmlNodeList = xmlDocument.SelectSingleNode("root").ChildNodes;
+            for (int i = 0; i < xmlNodeList.Count; i++)
+            {
+                XmlElement xmlElement = xmlNodeList[i] as XmlElement;
+                if (xmlElement.GetAttributeNode("ID") == null)
+                    continue;
+                int ID = Convert.ToInt32(xmlElement.GetAttributeNode("ID").InnerText);
+                TaskRewardCfg trc = new TaskRewardCfg
+                {
+                    ID = ID
+                };
+                foreach (XmlElement e in xmlElement.ChildNodes)
+                {
+                    switch (e.Name)
+                    {
+                        case "count":
+                            trc.count = int.Parse(e.InnerText);
+                            break;
+                        case "coin":
+                            trc.coin = int.Parse(e.InnerText);
+                            break;
+                        case "exp":
+                            trc.exp = int.Parse(e.InnerText);
+                            break;
+                        case "taskName":
+                            trc.taskName = e.InnerText;
+                            break;
+                    }
+                }
+                taskRewardDict.Add(ID, trc);
+            }
+        }
+    }
+
+    public TaskRewardCfg GetTaskRewardData(int id)
+    {
+        TaskRewardCfg trc = null;
+        if (taskRewardDict.TryGetValue(id, out trc))
+        {
+            return trc;
+        }
+        return null;
+    }
+
 }

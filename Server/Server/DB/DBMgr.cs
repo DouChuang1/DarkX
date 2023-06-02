@@ -82,6 +82,23 @@ public class DBMgr
                         }
                     }
                     playerData.strong = _stringArr;
+                    string[] taskStrArr = reader.GetString("task").Split('#');
+                    playerData.taskArr = new string[6];
+                    for(int i=0;i<taskStrArr.Length;i++)
+                    {
+                        if(taskStrArr[i]=="")
+                        {
+                            continue;
+                        }
+                        else if(taskStrArr[i].Length>=5)
+                        {
+                            playerData.taskArr[i] = taskStrArr[i];
+                        }
+                        else
+                        {
+                            throw new Exception("Data Error");
+                        }
+                    }
                 }
             }
         }
@@ -118,8 +135,15 @@ public class DBMgr
                     critical = 2,
                     guideid = 1001,
                     crystal = 500,
-                    strong = new int[6]
+                    strong = new int[6],
+                    taskArr = new string[6]
+
+                    
                 };
+                for(int i=0;i<playerData.taskArr.Length;i++)
+                {
+                    playerData.taskArr[i] = (i + 1) + "|0|0";
+                }
                 playerData.id = InsertNewAcctData(acct, pass, playerData);
             }
         }
@@ -134,7 +158,7 @@ public class DBMgr
         {
             MySqlCommand cmd = new MySqlCommand(
                 "insert into account set acct=@acct,pass=@pass,name=@name,level=@level,exp=@exp,power=@power,coin=@coin,diamond=@diamond,crystal=@crystal," +
-                "hp=@hp,ad=@ad,ap=@ap,addef=@addef,apdef=@apdef,dodge=@dodge,pierce=@pierce,critical=@critical,guideid=@guideid,strong=@strong,time=@time", conn);
+                "hp=@hp,ad=@ad,ap=@ap,addef=@addef,apdef=@apdef,dodge=@dodge,pierce=@pierce,critical=@critical,guideid=@guideid,strong=@strong,task=@task,time=@time", conn);
 
             cmd.Parameters.AddWithValue("acct", acct);
             cmd.Parameters.AddWithValue("pass", pss);
@@ -163,6 +187,14 @@ public class DBMgr
             }
             cmd.Parameters.AddWithValue("strong", strongInfo);
             cmd.Parameters.AddWithValue("time", playerData.time);
+
+            string taskInfo = "";
+            for(int i=0;i<playerData.taskArr.Length;i++)
+            {
+                taskInfo += playerData.taskArr[i];
+                taskInfo += "#";
+            }
+            cmd.Parameters.AddWithValue("task", taskInfo);
             cmd.ExecuteNonQuery();
             id = (int)cmd.LastInsertedId;
         }
@@ -207,7 +239,7 @@ public class DBMgr
         try
         {
             MySqlCommand cmd = new MySqlCommand("update account set name=@name,level=@level,exp=@exp,power=@power,coin=@coin,diamond=@diamond,crystal=@crystal," +
-                "hp=@hp,ad=@ad,ap=@ap,addef=@addef,apdef=@apdef,dodge=@dodge,pierce=@pierce,time=@time,critical=@critical,guideid=@guideid,strong=@strong where id = @id", conn);
+                "hp=@hp,ad=@ad,ap=@ap,addef=@addef,apdef=@apdef,dodge=@dodge,pierce=@pierce,time=@time,critical=@critical,guideid=@guideid,strong=@strong,task=@task where id = @id", conn);
             cmd.Parameters.AddWithValue("id", id);
             cmd.Parameters.AddWithValue("name", playerData.name);
             cmd.Parameters.AddWithValue("level", playerData.lv);
@@ -234,6 +266,14 @@ public class DBMgr
             }
             cmd.Parameters.AddWithValue("strong", strongInfo);
             cmd.Parameters.AddWithValue("time", playerData.time);
+
+            string taskInfo = "";
+            for (int i = 0; i < playerData.taskArr.Length; i++)
+            {
+                taskInfo += playerData.taskArr[i];
+                taskInfo += "#";
+            }
+            cmd.Parameters.AddWithValue("task", taskInfo);
             cmd.ExecuteNonQuery();
         }
         catch(Exception e)

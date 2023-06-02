@@ -77,4 +77,18 @@ public class CacheSvc
         }
         return lst;
     }
+
+    public SeverSession GetOnLineServerSession(int ID)
+    {
+        SeverSession severSession = null;
+        foreach(var item in onLineSessionDict)
+        {
+            if (item.Value.id == ID)
+            {
+                severSession = item.Key;
+                break;
+            }
+        }
+        return severSession;
+    }
 }

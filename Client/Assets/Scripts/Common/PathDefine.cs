@@ -9,6 +9,7 @@ public class PathDefine  {
 
     public const string AutoGuideCfg = "ResCfgs/guide";
     public const string StrongCfg = "ResCfgs/strong";
+    public const string TaskRewardCfg = "ResCfgs/taskreward";
 
     public const string ItemArrowBG = "ResImages/btnstrong";
     public const string ItemPlatBG = "ResImages/charbg3";
@@ -37,4 +38,6 @@ public class PathDefine  {
 
     public const string SpStar1 = "ResImages/star1";
     public const string SpStar2 = "ResImages/star2";
+    public const string TaskItemPrefab = "PrefabUI/ItemTask";
+
 }

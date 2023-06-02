@@ -20,6 +20,10 @@ namespace PEProtocol
         public ReqBuy reqBuy;
         public RspBuy rspBuy;
         public PshPower pshPower;
+
+        public ReqTakeTaskReward reqTakeTaskReward;
+        public RspTakeTaskReward rspTakeTaskReward;
+        public PshTaskPrgs pshTaskPrgs;
     }
 
     [Serializable]
@@ -57,6 +61,7 @@ namespace PEProtocol
         public int guideid;
         public int[] strong;
         public long time;
+        public string[] taskArr;
     }
     [Serializable]
     public class ReqRename
@@ -137,6 +142,26 @@ namespace PEProtocol
         public int power;
     }
 
+    [Serializable]
+    public class ReqTakeTaskReward
+    {
+        public int rid;
+    }
+
+    [Serializable]
+    public class RspTakeTaskReward
+    {
+        public int coin;
+        public int lv;
+        public int exp;
+        public string[] taskArr;
+    }
+
+    [Serializable]
+    public class PshTaskPrgs
+    {
+        public string[] taskArr;
+    }
 
     public enum ErrCode
     {
@@ -149,7 +174,8 @@ namespace PEProtocol
         LackLevel,
         LackCoin,
         LackCrystal,
-        LackDiamond
+        LackDiamond,
+        ClientDataError,
     }
 
     public enum CMD
@@ -172,6 +198,10 @@ namespace PEProtocol
         RspBuy = 207,
 
         PshPower = 208,
+
+        ReqTakeTaskReward = 209,
+        RspTakeTaskReward = 210,
+        PshTaskPrgs = 211,
     }
 
     public class SrvCfg

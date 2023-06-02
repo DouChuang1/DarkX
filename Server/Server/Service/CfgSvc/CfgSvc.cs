@@ -29,6 +29,19 @@ public class StrongCfg : BaseData<StrongCfg>
     public int coin;
     public int crystal;
 }
+public class TaskRewardCfg : BaseData<TaskRewardCfg>
+{
+    public int count;
+    public int exp;
+    public int coin;
+}
+
+public class TaskRewardData : BaseData<TaskRewardData>
+{
+    public int prgs;
+    public bool taked;
+}
+
 
 public class CfgSvc
 {
@@ -42,6 +55,7 @@ public class CfgSvc
         PECommon.Log("CfgSrc Init Done");
         InitGuideCfg();
         InitStrongCfg();
+        InitTaskRewardCfg();
     }
 
     private void InitGuideCfg()
@@ -166,5 +180,51 @@ public class CfgSvc
             }
         }
         return sd;
+    }
+
+    private Dictionary<int, TaskRewardCfg> taskRewardDic = new Dictionary<int, TaskRewardCfg>();
+    private void InitTaskRewardCfg()
+    {
+        XmlDocument xmlDocument = new XmlDocument();
+        xmlDocument.Load(@"E:\TA\DarkX\Client\Assets\Resources\ResCfgs\taskreward.xml");
+
+        XmlNodeList xmlNodeList = xmlDocument.SelectSingleNode("root").ChildNodes;
+        for (int i = 0; i < xmlNodeList.Count; i++)
+        {
+            XmlElement xmlElement = xmlNodeList[i] as XmlElement;
+            if (xmlElement.GetAttributeNode("ID") == null)
+                continue;
+            int ID = Convert.ToInt32(xmlElement.GetAttributeNode("ID").InnerText);
+            TaskRewardCfg trc = new TaskRewardCfg
+            {
+                ID = ID
+            };
+            foreach (XmlElement e in xmlElement.ChildNodes)
+            {
+                switch (e.Name)
+                {
+                    case "coin":
+                        trc.coin = int.Parse(e.InnerText);
+                        break;
+                    case "exp":
+                        trc.exp = int.Parse(e.InnerText);
+                        break;
+                    case "count":
+                        trc.count = int.Parse(e.InnerText);
+                        break;
+                }
+            }
+            taskRewardDic.Add(ID, trc);
+        }
+    }
+
+    public TaskRewardCfg GetTaskRewardCfg(int id)
+    {
+        TaskRewardCfg taskRewardCfg = null;
+        if (taskRewardDic.TryGetValue(id, out taskRewardCfg))
+        {
+            return taskRewardCfg;
+        }
+        return null;
     }
 }

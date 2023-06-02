@@ -19,7 +19,7 @@ public class ChatSys
     {
         SndChat data = pack.GameMsg.sndChat;
         PlayerData pd = CacheSvc.Instance.GetPlayerDataBySession(pack.SeverSession);
-
+        TaskSys.Instance.CalcTaskPrgs(pd, 6);
         GameMsg msg = new GameMsg
         {
             cmd = (int)CMD.pshChat,

@@ -34,9 +34,11 @@ public class BuySys
             switch(data.type)
             {
                 case 0:
+                    TaskSys.Instance.CalcTaskPrgs(pd, 4);
                     pd.power += 100;
                     break;
                 case 1:
+                    TaskSys.Instance.CalcTaskPrgs(pd, 5);
                     pd.coin += 1000;
                     break;
             }

@@ -40,3 +40,17 @@ public class StrongCfg : BaseData<StrongCfg>
     public int coin;
     public int crystal;
 }
+
+public class TaskRewardCfg :BaseData<TaskRewardCfg>
+{
+    public string taskName;
+    public int count;
+    public int exp;
+    public int coin;
+}
+
+public class TaskRewardData : BaseData<TaskRewardData>
+{
+    public int prgs;
+    public bool taked;
+}

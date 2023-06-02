@@ -132,4 +132,16 @@ public class WindowRoot : MonoBehaviour {
         img.sprite = sp;
     }
 
+    public Transform GetTrans(Transform trans,string name)
+    {
+        if(trans!=null)
+        {
+            return trans.Find(name);
+        }
+        else
+        {
+            return transform.Find(name);
+        }
+    }
+
 }

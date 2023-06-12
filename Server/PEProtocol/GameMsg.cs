@@ -24,6 +24,9 @@ namespace PEProtocol
         public ReqTakeTaskReward reqTakeTaskReward;
         public RspTakeTaskReward rspTakeTaskReward;
         public PshTaskPrgs pshTaskPrgs;
+
+        public ReqFBFight reqFBFight;
+        public RspFBFight rspFBFight;
     }
 
     [Serializable]
@@ -62,6 +65,7 @@ namespace PEProtocol
         public int[] strong;
         public long time;
         public string[] taskArr;
+        public int fuben;
     }
     [Serializable]
     public class ReqRename
@@ -143,6 +147,19 @@ namespace PEProtocol
     }
 
     [Serializable]
+    public class ReqFBFight
+    {
+        public int fbid;
+    }
+
+    [Serializable]
+    public class RspFBFight
+    {
+        public int fbid;
+        public int power;
+    }
+
+    [Serializable]
     public class ReqTakeTaskReward
     {
         public int rid;
@@ -176,6 +193,7 @@ namespace PEProtocol
         LackCrystal,
         LackDiamond,
         ClientDataError,
+        LackPower,
     }
 
     public enum CMD
@@ -202,6 +220,8 @@ namespace PEProtocol
         ReqTakeTaskReward = 209,
         RspTakeTaskReward = 210,
         PshTaskPrgs = 211,
+        ReqFBFight = 301,
+        RspFBFight = 302,
     }
 
     public class SrvCfg

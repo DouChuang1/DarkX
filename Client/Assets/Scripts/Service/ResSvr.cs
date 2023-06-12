@@ -144,6 +144,9 @@ public class ResSvr : MonoBehaviour {
                         case "mapName":
                             mapCfg.mapName = e.InnerText;
                             break;
+                        case "power":
+                            mapCfg.power = int.Parse(e.InnerText);
+                            break;
                         case "sceneName":
                             mapCfg.sceneName = e.InnerText;
                             break;

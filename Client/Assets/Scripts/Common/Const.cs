@@ -43,6 +43,8 @@ public class Const  {
     public const string SceneLogin = "SceneLogin";
 	public const string BGLogin = "bgLogin";
     public const string BGMainCity = "bgMainCity";
+    public const string BGHuangYe = "bgHuangYe";
+    
     public const string UIExtenBtn = "uiExtenBtn";
     public const string UIOpenBtn = "uiOpenPage";
 

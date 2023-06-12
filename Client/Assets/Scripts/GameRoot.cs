@@ -48,6 +48,10 @@ public class GameRoot : MonoBehaviour {
 
         MainCitySys mainCitySys = GetComponent<MainCitySys>();
         mainCitySys.InitSys();
+        FubenSys fubenSys = GetComponent<FubenSys>();
+        fubenSys.InitSys();
+        BattleSys battleSys = GetComponent<BattleSys>();
+        battleSys.InitSys();
 
         //进入登录场景
         loginSys.EnterLogin();
@@ -119,5 +123,8 @@ public class GameRoot : MonoBehaviour {
         playerData.taskArr = data.taskArr;
     }
 
-
+    public void SetPlayerDataByFBStart(RspFBFight data)
+    {
+        playerData.power = data.power;
+    }
 }

@@ -15,6 +15,8 @@ public class PathDefine  {
     public const string ItemPlatBG = "ResImages/charbg3";
 
     public const string AssissnCityPlayerPrefab = "PrefabPlayer/AssassinCity";
+    public const string AssissnBattlePlayerPrefab = "PrefabPlayer/Assassin";
+    
 
     public const string TaskHead = "ResImages/task";
     public const string WiseManHead = "ResImages/wiseman";

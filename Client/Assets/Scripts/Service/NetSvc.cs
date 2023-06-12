@@ -132,6 +132,9 @@ public class NetSvc : MonoBehaviour
             case CMD.PshTaskPrgs:
                 MainCitySys.instance.PshTaskPrgs(msg);
                 break;
+            case CMD.RspFBFight:
+                FubenSys.instance.RspFBFight(msg);
+                break;
         }
     }
 }

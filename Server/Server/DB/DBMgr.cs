@@ -63,6 +63,7 @@ public class DBMgr
                         guideid = reader.GetInt32("guideid"),
                         crystal = reader.GetInt32("crystal"),
                         time = reader.GetInt64("time"),
+                        fuben = reader.GetInt32("fuben"),
                     };
                     string[] strongStrArr = reader.GetString("strong").Split('#');
                     int[] _stringArr = new int[6];
@@ -136,8 +137,8 @@ public class DBMgr
                     guideid = 1001,
                     crystal = 500,
                     strong = new int[6],
-                    taskArr = new string[6]
-
+                    taskArr = new string[6],
+                    fuben=10001
                     
                 };
                 for(int i=0;i<playerData.taskArr.Length;i++)
@@ -158,7 +159,7 @@ public class DBMgr
         {
             MySqlCommand cmd = new MySqlCommand(
                 "insert into account set acct=@acct,pass=@pass,name=@name,level=@level,exp=@exp,power=@power,coin=@coin,diamond=@diamond,crystal=@crystal," +
-                "hp=@hp,ad=@ad,ap=@ap,addef=@addef,apdef=@apdef,dodge=@dodge,pierce=@pierce,critical=@critical,guideid=@guideid,strong=@strong,task=@task,time=@time", conn);
+                "hp=@hp,ad=@ad,ap=@ap,addef=@addef,apdef=@apdef,dodge=@dodge,pierce=@pierce,critical=@critical,guideid=@guideid,strong=@strong,fuben=@fuben,task=@task,time=@time", conn);
 
             cmd.Parameters.AddWithValue("acct", acct);
             cmd.Parameters.AddWithValue("pass", pss);
@@ -178,7 +179,7 @@ public class DBMgr
             cmd.Parameters.AddWithValue("critical", playerData.critical);
             cmd.Parameters.AddWithValue("guideid", playerData.guideid);
             cmd.Parameters.AddWithValue("crystal", playerData.crystal);
-            
+            cmd.Parameters.AddWithValue("fuben", playerData.fuben);
             string strongInfo = "";
             for(int i=0;i<playerData.strong.Length;i++)
             {
@@ -239,7 +240,7 @@ public class DBMgr
         try
         {
             MySqlCommand cmd = new MySqlCommand("update account set name=@name,level=@level,exp=@exp,power=@power,coin=@coin,diamond=@diamond,crystal=@crystal," +
-                "hp=@hp,ad=@ad,ap=@ap,addef=@addef,apdef=@apdef,dodge=@dodge,pierce=@pierce,time=@time,critical=@critical,guideid=@guideid,strong=@strong,task=@task where id = @id", conn);
+                "hp=@hp,ad=@ad,ap=@ap,addef=@addef,apdef=@apdef,dodge=@dodge,pierce=@pierce,fuben=@fuben,time=@time,critical=@critical,guideid=@guideid,strong=@strong,task=@task where id = @id", conn);
             cmd.Parameters.AddWithValue("id", id);
             cmd.Parameters.AddWithValue("name", playerData.name);
             cmd.Parameters.AddWithValue("level", playerData.lv);
@@ -258,6 +259,7 @@ public class DBMgr
             cmd.Parameters.AddWithValue("critical", playerData.critical);
             cmd.Parameters.AddWithValue("guideid", playerData.guideid);
             cmd.Parameters.AddWithValue("crystal", playerData.crystal);
+            cmd.Parameters.AddWithValue("fuben", playerData.fuben);
             string strongInfo = "";
             for (int i = 0; i < playerData.strong.Length; i++)
             {

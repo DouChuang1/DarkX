@@ -12,6 +12,12 @@ public class BaseData<T>
     public int ID;
 }
 
+public class MapCfg : BaseData<MapCfg>
+{
+    public int power;
+}
+
+
 public class GuideCfg :BaseData<GuideCfg>
 {
     public int coin;
@@ -56,7 +62,47 @@ public class CfgSvc
         InitGuideCfg();
         InitStrongCfg();
         InitTaskRewardCfg();
+        InitMapCfg();
     }
+    private Dictionary<int, MapCfg> mapCfgDataDic = new Dictionary<int, MapCfg>();
+    private void InitMapCfg()
+    {
+
+        XmlDocument xmlDocument = new XmlDocument();
+        xmlDocument.Load(@"E:\TA\DarkX\Client\Assets\Resources\ResCfgs\map.xml");
+
+        XmlNodeList xmlNodeList = xmlDocument.SelectSingleNode("root").ChildNodes;
+        for (int i = 0; i < xmlNodeList.Count; i++)
+        {
+            XmlElement xmlElement = xmlNodeList[i] as XmlElement;
+            if (xmlElement.GetAttributeNode("ID") == null)
+                continue;
+            int ID = Convert.ToInt32(xmlElement.GetAttributeNode("ID").InnerText);
+            MapCfg mapCfg = new MapCfg
+            {
+                ID = ID
+            };
+            foreach (XmlElement e in xmlElement.ChildNodes)
+            {
+                switch (e.Name)
+                {
+                    case "power":
+                        mapCfg.power = int.Parse(e.InnerText);
+                        break;
+                }
+            }
+            mapCfgDataDic.Add(ID, mapCfg);
+        }
+    }
+
+    public MapCfg GetMapCfgData(int mapId)
+    {
+        MapCfg mapCfg;
+        if (mapCfgDataDic.TryGetValue(mapId, out mapCfg))
+            return mapCfg;
+        return null;
+    }
+
 
     private void InitGuideCfg()
     {

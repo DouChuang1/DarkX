@@ -176,6 +176,7 @@ public class MainCitySys : SystemRoot {
 
     internal void OpenChatWnd()
     {
+        StopNavTask();
         ChatWnd.SetWndState(true);
     }
 
@@ -221,14 +222,19 @@ public class MainCitySys : SystemRoot {
             case 0:
                 break;
             case 1:
+                EnterFuben();
                 break;
             case 2:
+                StrongWnd.SetWndState(true);
                 break;
             case 3:
+                OpenBuyWnd(0);
                 break;
             case 4:
+                OpenBuyWnd(1);
                 break;
             case 5:
+                OpenChatWnd();
                 break;
         }
 
@@ -249,6 +255,7 @@ public class MainCitySys : SystemRoot {
 
     public void OpenBuyWnd(int type)
     {
+        StopNavTask();
         BuyWnd.SetBuyType(type);
         BuyWnd.SetWndState(true);
     }
@@ -285,4 +292,10 @@ public class MainCitySys : SystemRoot {
         GameRoot.Instance.SetPlayerDataByTask(data);
         //TaskWnd.RefreshUI();
     }
+    public void EnterFuben()
+    {
+        StopNavTask();
+        FubenSys.instance.EnterFuben();
+    }
+
 }

@@ -227,4 +227,10 @@ public class MainCityWnd : WindowRoot {
         MainCitySys.instance.OpenBuyWnd(1);
     }
 
+    public void EnterFubenBtn()
+    {
+        audioSvc.PlayUIAudio(Const.UIClickBtn);
+        MainCitySys.instance.EnterFuben();
+    }
+
 }

@@ -75,6 +75,9 @@ public class NetSvc
             case CMD.ReqTakeTaskReward:
                 TaskSys.Instance.ReqTaskTaskReward(msg);
                 break;
+            case CMD.ReqFBFight:
+                FubenSys.Instance.ReqFubenFight(msg);
+                break;
         }
     }
 }

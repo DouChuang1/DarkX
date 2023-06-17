@@ -10,6 +10,8 @@ public class PathDefine  {
     public const string AutoGuideCfg = "ResCfgs/guide";
     public const string StrongCfg = "ResCfgs/strong";
     public const string TaskRewardCfg = "ResCfgs/taskreward";
+    public const string SkillCfg = "ResCfgs/skill";
+    public const string SkillMoveCfg = "ResCfgs/skillmove";
 
     public const string ItemArrowBG = "ResImages/btnstrong";
     public const string ItemPlatBG = "ResImages/charbg3";

@@ -11,9 +11,10 @@ public class StateMgr:MonoBehaviour
     {
         fsm.Add(AniState.Idle, new StateIdle());
         fsm.Add(AniState.Move, new StateMove());
+        fsm.Add(AniState.Attack, new StateAttack());
     }
 
-    public void ChangeState(EntityBase entity,AniState state)
+    public void ChangeState(EntityBase entity,AniState state,params object[] args)
     {
         if(entity.curAniState==state)
         {
@@ -24,10 +25,10 @@ public class StateMgr:MonoBehaviour
         {
             if(entity.curAniState!=AniState.None)
             {
-                fsm[entity.curAniState].Exit(entity);
+                fsm[entity.curAniState].Exit(entity, args);
             }
-            fsm[state].Enter(entity);
-            fsm[state].Process(entity);
+            fsm[state].Enter(entity, args);
+            fsm[state].Process(entity,args);
         }
     }
 }

@@ -17,6 +17,8 @@ public class ResSvr : MonoBehaviour {
         InitGuideCfg(PathDefine.AutoGuideCfg);
         InitStrongCfg(PathDefine.StrongCfg);
         InitTaskRewardCfg(PathDefine.TaskRewardCfg);
+        InitSkillCfg(PathDefine.SkillCfg);
+        InitSkillMoveCfg(PathDefine.SkillMoveCfg);
         Debug.Log("ResSvr Start");
 	}
 	private Action prgCB = null;
@@ -443,6 +445,120 @@ public class ResSvr : MonoBehaviour {
         if (taskRewardDict.TryGetValue(id, out trc))
         {
             return trc;
+        }
+        return null;
+    }
+
+    private Dictionary<int, SkillCfg> skillCfgDict = new Dictionary<int, SkillCfg>();
+
+    private void InitSkillCfg(string path)
+    {
+        TextAsset textAsset = Resources.Load<TextAsset>(path);
+        if (textAsset != null)
+        {
+            XmlDocument xmlDocument = new XmlDocument();
+            xmlDocument.LoadXml(textAsset.text);
+
+            XmlNodeList xmlNodeList = xmlDocument.SelectSingleNode("root").ChildNodes;
+            for (int i = 0; i < xmlNodeList.Count; i++)
+            {
+                XmlElement xmlElement = xmlNodeList[i] as XmlElement;
+                if (xmlElement.GetAttributeNode("ID") == null)
+                    continue;
+                int ID = Convert.ToInt32(xmlElement.GetAttributeNode("ID").InnerText);
+                SkillCfg skillCfg = new SkillCfg
+                {
+                    ID = ID,
+                    skillMoveLst = new List<int>()
+                };
+                foreach (XmlElement e in xmlElement.ChildNodes)
+                {
+                    switch (e.Name)
+                    {
+                        case "skillName":
+                            skillCfg.skillName = e.InnerText;
+                            break;
+                        case "skillTime":
+                            skillCfg.skillTime = int.Parse(e.InnerText);
+                            break;
+                        case "aniAction":
+                            skillCfg.aniAction = int.Parse(e.InnerText);
+                            break;
+                        case "fx":
+                            skillCfg.fx = e.InnerText;
+                            break;
+                        case "skillMoveLst":
+                            string[] skMoveArr = e.InnerText.Split('|');
+                            for(int j=0;j<skMoveArr.Length;j++)
+                            {
+                                skillCfg.skillMoveLst.Add(int.Parse(skMoveArr[j]));
+                            }
+                            break;
+                    }
+                }
+                skillCfgDict.Add(ID, skillCfg);
+            }
+        }
+    }
+
+    public SkillCfg GetSkillCfg(int id)
+    {
+        SkillCfg sc = null;
+        if (skillCfgDict.TryGetValue(id, out sc))
+        {
+            return sc;
+        }
+        return null;
+    }
+
+    private Dictionary<int, SkillMoveCfg> skillMoveCfgDict = new Dictionary<int, SkillMoveCfg>();
+
+    private void InitSkillMoveCfg(string path)
+    {
+        TextAsset textAsset = Resources.Load<TextAsset>(path);
+        if (textAsset != null)
+        {
+            XmlDocument xmlDocument = new XmlDocument();
+            xmlDocument.LoadXml(textAsset.text);
+
+            XmlNodeList xmlNodeList = xmlDocument.SelectSingleNode("root").ChildNodes;
+            for (int i = 0; i < xmlNodeList.Count; i++)
+            {
+                XmlElement xmlElement = xmlNodeList[i] as XmlElement;
+                if (xmlElement.GetAttributeNode("ID") == null)
+                    continue;
+                int ID = Convert.ToInt32(xmlElement.GetAttributeNode("ID").InnerText);
+                SkillMoveCfg smCfg = new SkillMoveCfg
+                {
+                    ID = ID
+                };
+                foreach (XmlElement e in xmlElement.ChildNodes)
+                {
+                    switch (e.Name)
+                    {
+                        case "moveTime":
+                            smCfg.moveTime = int.Parse(e.InnerText);
+                            break;
+                        case "moveDis":
+                            smCfg.moveDis = float.Parse(e.InnerText);
+                            break;
+                        case "delayTime":
+                            smCfg.delayTime = int.Parse(e.InnerText);
+                            break;
+
+                    }
+                }
+                skillMoveCfgDict.Add(ID, smCfg);
+            }
+        }
+    }
+
+    public SkillMoveCfg GetSkillMoveCfg(int id)
+    {
+        SkillMoveCfg smc = null;
+        if (skillMoveCfgDict.TryGetValue(id, out smc))
+        {
+            return smc;
         }
         return null;
     }

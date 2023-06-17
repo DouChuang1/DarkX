@@ -55,3 +55,19 @@ public class TaskRewardData : BaseData<TaskRewardData>
     public int prgs;
     public bool taked;
 }
+
+public class SkillCfg:BaseData<SkillCfg>
+{
+    public string skillName;
+    public int skillTime;
+    public int aniAction;
+    public string fx;
+    public List<int> skillMoveLst;
+}
+
+public class SkillMoveCfg : BaseData<SkillMoveCfg>
+{
+    public int moveTime;
+    public float moveDis;
+    public int delayTime;
+}

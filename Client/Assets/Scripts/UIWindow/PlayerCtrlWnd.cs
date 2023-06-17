@@ -19,6 +19,8 @@ public class PlayerCtrlWnd : WindowRoot {
     public Text txtExpPrg;
     public Transform expPrgTrans;
 
+    public Vector2 currentDir = Vector2.zero;
+
     public override void InitWnd()
     {
         base.InitWnd();
@@ -84,9 +86,9 @@ public class PlayerCtrlWnd : WindowRoot {
             imageDirBg.transform.position = defaultPos;
             SetActive(imagDirPoint, false);
             imagDirPoint.transform.localPosition = Vector2.zero;
-
+            currentDir = Vector2.zero;
             //传递方向信息
-            BattleSys.instance.SetSelfPlayerMoveDir(Vector2.zero);
+            BattleSys.instance.SetSelfPlayerMoveDir(currentDir);
         });
 
         OnDrag(this.imageTouch.gameObject, (PointerEventData evt) =>
@@ -102,7 +104,8 @@ public class PlayerCtrlWnd : WindowRoot {
             {
                 imagDirPoint.transform.position = evt.position;
             }
-            BattleSys.instance.SetSelfPlayerMoveDir(dir.normalized);
+            currentDir = dir.normalized;
+            BattleSys.instance.SetSelfPlayerMoveDir(currentDir);
             //传递方向信息
         });
     }

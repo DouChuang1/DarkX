@@ -26,23 +26,6 @@ public class ServerRoot
         PowerSys.Instance.Init();
         TaskSys.Instance.Init();
         FubenSys.Instance.Init();
-
-        try
-        {
-            try
-            {
-                Test(10, 0);
-            }
-            catch
-            {
-                throw new Exception("被除数不能为0");
-            }
-            throw new Exception("测试");
-        }
-        catch(Exception e)
-        {
-            PECommon.Log("Test-----" + e);
-        }
     }
 
     public int  Test(int a,int b)

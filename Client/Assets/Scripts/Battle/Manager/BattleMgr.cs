@@ -33,6 +33,7 @@ public class BattleMgr:MonoBehaviour
              Camera.main.transform.position = mapCfg.mainCamPos;
              Camera.main.transform.localEulerAngles = mapCfg.mainCamRote;
              LoadPlayer(mapCfg);
+             entityPlayer.Idle();
              AudioSvc.Instance.PlayBGMusic(Const.BGHuangYe);
              if(cb!=null)
              {
@@ -50,7 +51,8 @@ public class BattleMgr:MonoBehaviour
         player.transform.localEulerAngles = mapCfg.playerBornRote;
         entityPlayer = new EntityPlayer();
         entityPlayer.stateMgr = StateMgr;
-
+        entityPlayer.skillMgr = SkillMgr;
+        entityPlayer.battleMgr = this;
         PlayerController playerCtrl = player.GetComponent<PlayerController>();
         playerCtrl.Init();
         entityPlayer.playCtrl = playerCtrl;
@@ -58,6 +60,10 @@ public class BattleMgr:MonoBehaviour
 
     public void SetSelfPlayerMoveDir(Vector2 dir)
     {
+        if(!entityPlayer.canControl)
+        {
+            return;
+        }
         if(dir==Vector2.zero)
         {
             entityPlayer.Idle();
@@ -65,6 +71,7 @@ public class BattleMgr:MonoBehaviour
         else
         {
             entityPlayer.Move();
+            entityPlayer.SetDir(dir);
         }
     }
 
@@ -75,7 +82,7 @@ public class BattleMgr:MonoBehaviour
 
     public void ReleaseSkill1()
     {
-
+        entityPlayer.Attack(101);
     }
     public void ReleaseSkill2()
     {
@@ -103,5 +110,10 @@ public class BattleMgr:MonoBehaviour
                 ReleaseSkill3();
                 break;
         }
+    }
+
+    public Vector2 GetDirInput()
+    {
+        return BattleSys.instance.GetDirInput();
     }
 }

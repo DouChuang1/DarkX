@@ -1,44 +1,28 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : Controller {
 
     private Transform camTrans;
-    public Animator ani;
     public CharacterController ctrl;
 
-    private Vector2 dir = Vector2.zero;
-    private bool isMove = false;
     private Vector3 camOffset;
-
+    public new Animator ani;
     float targetBlend;
     float currentBlend;
-
-    public Vector2 Dir
-    {
-        get
-        {
-            return dir;
-        }
-        set
-        {
-            if (value == Vector2.zero)
-            {
-                isMove = false;
-            }
-            else
-            {
-                isMove = true;
-            }
-            dir = value;
-        }
-    }
+    public GameObject daggeratk1fx;
 
     public void Init()
     {
         camTrans = Camera.main.transform;
         camOffset = transform.position - camTrans.position;
+
+        if(daggeratk1fx!=null)
+        {
+            fxDic.Add(daggeratk1fx.name, daggeratk1fx);
+        }
     }
 
     private void Update()
@@ -68,6 +52,16 @@ public class PlayerController : Controller {
             SetMove();
             SetCam();
         }
+        if(skillMove)
+        {
+            SetSkillMove();
+            SetCam();
+        }
+    }
+
+    private void SetSkillMove()
+    {
+        ctrl.Move(transform.forward * Time.deltaTime * skillMoveSpeed);
     }
 
     private void SetMove()
@@ -90,7 +84,7 @@ public class PlayerController : Controller {
         transform.localEulerAngles = eulerAngles;
     }
 
-    public void SetBlend(float blend)
+    public override void SetBlend(float blend)
     {
         targetBlend = blend;
     }
@@ -110,5 +104,18 @@ public class PlayerController : Controller {
             currentBlend += Const.AccelerSpeed * Time.deltaTime;
         }
         ani.SetFloat("Blend", currentBlend);
+    }
+
+    public override void SetFX(string name, float destroyTime)
+    {
+        GameObject go;
+        if(fxDic.TryGetValue(name,out go))
+        {
+            go.SetActive(true);
+            TimerSvc.Instance.AddTimeTask((int tid) =>
+            {
+                go.SetActive(false);
+            }, destroyTime);
+        }
     }
 }

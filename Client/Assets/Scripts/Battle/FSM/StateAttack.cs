@@ -22,7 +22,7 @@ public class StateAttack : IState
     public void Process(EntityBase entity, params object[] args)
     {
         PECommon.Log("Enter Attack");
-        entity.AttackEffect((int)args[0]);
+        entity.SkillAttack((int)args[0]);
         //entity.SetAction(1);
     }
 }

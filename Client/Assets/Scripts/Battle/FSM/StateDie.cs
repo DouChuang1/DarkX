@@ -1,25 +1,26 @@
-﻿using PEProtocol;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-public class StateMove : IState
+public class StateDie : IState
 {
     public void Enter(EntityBase entity, params object[] args)
     {
-        entity.curAniState = AniState.Move;
-        PECommon.Log("Enter Walk");
+        entity.curAniState = AniState.Die;
     }
 
     public void Exit(EntityBase entity, params object[] args)
     {
-        PECommon.Log("Exit Walk");
+        
     }
 
     public void Process(EntityBase entity, params object[] args)
     {
-        PECommon.Log("Process Walk");
-        entity.ctrl.SetBlend(Const.BlendWalk);
+        entity.SetAction(Const.ActionDie);
+        TimerSvc.Instance.AddTimeTask((int id) =>
+        {
+            entity.ctrl.gameObject.SetActive(false);
+        }, 5000);
     }
 }

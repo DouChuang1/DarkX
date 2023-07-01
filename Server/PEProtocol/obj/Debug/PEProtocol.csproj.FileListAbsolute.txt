@@ -7,4 +7,3 @@ E:\TA\DarkX\Server\PEProtocol\obj\Debug\PEProtocol.dll
 E:\TA\DarkX\Server\PEProtocol\obj\Debug\PEProtocol.pdb
 E:\TA\DarkX\Client\Assets\Net\PEProtocol.dll
 E:\TA\DarkX\Client\Assets\Net\PEProtocol.pdb
-E:\TA\DarkX\Server\PEProtocol\obj\Debug\PEProtocol.csprojAssemblyReference.cache

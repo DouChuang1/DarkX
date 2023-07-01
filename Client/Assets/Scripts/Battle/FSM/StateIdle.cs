@@ -29,7 +29,7 @@ public class StateIdle : IState
         }
         else
         {
-            entity.playCtrl.SetBlend(Const.BlendIdle);
+            entity.ctrl.SetBlend(Const.BlendIdle);
         }
     }
 }

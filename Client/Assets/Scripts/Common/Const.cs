@@ -9,6 +9,12 @@ public enum TxtColor
     Yellow
 }
 
+public enum DamageType
+{
+    None,
+    AD=1,
+    AP=2
+}
 
 public class Const  {
     private const string ColorRed = "<color=#FF0000FF>";
@@ -73,4 +79,10 @@ public class Const  {
     public const int NPCGeneral = 1;
     public const int NPCArtisan = 2;
     public const int NPCTrader = 3;
+
+    public const int ActionBorn = 0;
+    public const int ActionDie = 100;
+    public const int ActionHit = 101;
+
+    public const int ActionDefault = -1;
 }

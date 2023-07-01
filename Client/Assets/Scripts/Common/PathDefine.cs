@@ -12,6 +12,8 @@ public class PathDefine  {
     public const string TaskRewardCfg = "ResCfgs/taskreward";
     public const string SkillCfg = "ResCfgs/skill";
     public const string SkillMoveCfg = "ResCfgs/skillmove";
+    public const string SkillActionCfg = "ResCfgs/skillaction";
+    public const string MonsterCfg = "ResCfgs/monster";
 
     public const string ItemArrowBG = "ResImages/btnstrong";
     public const string ItemPlatBG = "ResImages/charbg3";

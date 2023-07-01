@@ -6,11 +6,16 @@ using UnityEngine;
 
 public class Controller :MonoBehaviour
 {
+    public CharacterController ctrl;
     public Animator ani;
     private Vector2 dir = Vector2.zero;
     protected bool isMove = false;
-
     protected Dictionary<string, GameObject> fxDic = new Dictionary<string, GameObject>();
+
+    public virtual void Init()
+    {
+
+    }
 
     public Vector2 Dir
     {

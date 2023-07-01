@@ -6,15 +6,12 @@ using UnityEngine;
 public class PlayerController : Controller {
 
     private Transform camTrans;
-    public CharacterController ctrl;
-
-    private Vector3 camOffset;
-    public new Animator ani;
+    public Vector3 camOffset;
     float targetBlend;
     float currentBlend;
     public GameObject daggeratk1fx;
 
-    public void Init()
+    public override void Init()
     {
         camTrans = Camera.main.transform;
         camOffset = transform.position - camTrans.position;

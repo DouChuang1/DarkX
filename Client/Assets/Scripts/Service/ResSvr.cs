@@ -509,6 +509,18 @@ public class ResSvr : MonoBehaviour {
                         case "skillName":
                             skillCfg.skillName = e.InnerText;
                             break;
+                        case "isCombo":
+                            skillCfg.isCombo = e.InnerText.Equals("1");
+                            break;
+                        case "isCollide":
+                            skillCfg.isCollide = e.InnerText.Equals("1");
+                            break;
+                        case "isBreak":
+                            skillCfg.isBreak = e.InnerText.Equals("1");
+                            break;
+                        case "cdTime":
+                            skillCfg.cdTime = int.Parse(e.InnerText);
+                            break;
                         case "skillTime":
                             skillCfg.skillTime = int.Parse(e.InnerText);
                             break;
@@ -705,6 +717,25 @@ public class ResSvr : MonoBehaviour {
                             break;
                         case "resPath":
                             mCfg.resPath = e.InnerText;
+                            break;
+                        case "mType":
+                           if(e.InnerText.Equals("1"))
+                            {
+                                mCfg.mType = MonsterType.Normal;
+                            }
+                           else if(e.InnerText.Equals("2"))
+                            {
+                                mCfg.mType = MonsterType.Boss;
+                            }
+                            break;
+                        case "isStop":
+                            mCfg.isStop = e.InnerText.Equals("1");
+                            break;
+                        case "skillID":
+                            mCfg.skillID = int.Parse(e.InnerText);
+                            break;
+                        case "atkDis":
+                            mCfg.atkDis = float.Parse(e.InnerText);
                             break;
                         case "hp":
                             mCfg.bps.hp = int.Parse(e.InnerText);

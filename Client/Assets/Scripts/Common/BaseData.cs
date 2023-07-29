@@ -67,6 +67,10 @@ public class SkillActionCfg:BaseData<SkillActionCfg>
 public class SkillCfg:BaseData<SkillCfg>
 {
     public string skillName;
+    public int cdTime;
+    public bool isCombo;
+    public bool isCollide;
+    public bool isBreak;
     public int skillTime;
     public int aniAction;
     public string fx;
@@ -96,7 +100,11 @@ public class MonsterData:BaseData<MonsterData>
 public class MonsterCfg:BaseData<MonsterCfg>
 {
     public string mName;
+    public MonsterType mType;
+    public bool isStop;  //怪物是否能被攻击中断当前的状态
     public string resPath;
+    public int skillID;
+    public float atkDis;
     public BattleProps bps;
 }
 

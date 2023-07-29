@@ -11,7 +11,7 @@ public class BattleMgr:MonoBehaviour
     private StateMgr StateMgr;
     private SkillMgr SkillMgr;
     private MapMgr MapMgr;
-    private EntityBase entityPlayer;
+    public EntityPlayer entityPlayer;
     private MapCfg mapCfg;
     private Dictionary<string, EntityMonster> monsterDic = new Dictionary<string, EntityMonster>();
     public void Init(int mapId,Action cb)
@@ -45,6 +45,15 @@ public class BattleMgr:MonoBehaviour
          });
     }
 
+    public void Update()
+    {
+        foreach(var item in monsterDic)
+        {
+            EntityMonster em = item.Value;
+            em.TickAILogic();
+        }
+    }
+
     public void LoadPlayer(MapCfg mapCfg)
     {
         GameObject player = ResSvr.LoadPrefab(PathDefine.AssissnBattlePlayerPrefab);
@@ -70,9 +79,10 @@ public class BattleMgr:MonoBehaviour
         entityPlayer.stateMgr = StateMgr;
         entityPlayer.skillMgr = SkillMgr;
         entityPlayer.battleMgr = this;
+        entityPlayer.Name = "Assassin";
         PlayerController playerCtrl = player.GetComponent<PlayerController>();
         playerCtrl.Init();
-        entityPlayer.ctrl = playerCtrl;
+        entityPlayer.SetCtrl(playerCtrl);
     }
 
     public void LoadMonsterByWaveID(int waveId)
@@ -95,12 +105,14 @@ public class BattleMgr:MonoBehaviour
                     skillMgr = SkillMgr
                 };
                 em.md = md;
+                em.Name = m.name;
                 em.SetBattleProps(md.mCfg.bps);
                 MonsterController mc = m.GetComponent<MonsterController>();
                 mc.Init();
-                em.ctrl = mc;
+                em.SetCtrl(mc);
                 m.SetActive(false);
                 monsterDic.Add(m.name, em);
+                GameRoot.Instance.dynamicWnd.AddHpItemInfo(m.name,em.ctrl.hpRoot, em.Hp);
             }
         }
     }
@@ -111,7 +123,7 @@ public class BattleMgr:MonoBehaviour
         {
             foreach(var item in monsterDic)
             {
-                item.Value.ctrl.gameObject.SetActive(true);
+                item.Value.SetActive(true);
                 item.Value.Born();
                 TimerSvc.Instance.AddTimeTask((int id) =>
                 {
@@ -137,20 +149,50 @@ public class BattleMgr:MonoBehaviour
         {
             return;
         }
-        if(dir==Vector2.zero)
+        if(entityPlayer.curAniState== AniState.Idle || entityPlayer.curAniState== AniState.Move)
         {
-            entityPlayer.Idle();
+            if (dir == Vector2.zero)
+            {
+                entityPlayer.Idle();
+            }
+            else
+            {
+                entityPlayer.Move();
+                entityPlayer.SetDir(dir);
+            }
         }
-        else
-        {
-            entityPlayer.Move();
-            entityPlayer.SetDir(dir);
-        }
+        
     }
 
+    private int[] comboArr = new int[] { 111, 112, 113, 114, 115 };
+    public double lastAtkTime = 0;
+    public int comboIndex = 0;
     public void ReleaseNormalAttack()
     {
-
+        if (entityPlayer.curAniState == AniState.Attack)
+        {
+            double nowAttackTime = TimerSvc.Instance.GetNowTime();
+            if(nowAttackTime-lastAtkTime<Const.ComboSpace && lastAtkTime!=0)
+            {
+                if(comboIndex!=comboArr.Length-1)
+                {
+                    comboIndex += 1;
+                    entityPlayer.comboQue.Enqueue(comboArr[comboIndex]);
+                    lastAtkTime = nowAttackTime;
+                }
+                else
+                {
+                    lastAtkTime = 0;
+                    comboIndex = 0;
+                }
+            }
+        }
+        else if (entityPlayer.curAniState == AniState.Idle || entityPlayer.curAniState == AniState.Move)
+        {
+            comboIndex = 0;
+            lastAtkTime = TimerSvc.Instance.GetNowTime();
+            entityPlayer.Attack(comboArr[0]);
+        }
     }
 
     public void ReleaseSkill1()
@@ -159,11 +201,11 @@ public class BattleMgr:MonoBehaviour
     }
     public void ReleaseSkill2()
     {
-
+        entityPlayer.Attack(102);
     }
     public void ReleaseSkill3()
     {
-
+        entityPlayer.Attack(103);
     }
 
     public void ReqReleaseSkill(int index)
@@ -188,5 +230,20 @@ public class BattleMgr:MonoBehaviour
     public Vector2 GetDirInput()
     {
         return BattleSys.instance.GetDirInput();
+    }
+
+    public void RemoveMonster(string key)
+    {
+        EntityMonster em;
+        if(monsterDic.TryGetValue(key,out em))
+        {
+            monsterDic.Remove(key);
+            GameRoot.Instance.dynamicWnd.RmvHpItemInfo(key);
+        }
+    }
+
+    public bool CanRlsSkill()
+    {
+        return entityPlayer.canSkill;
     }
 }

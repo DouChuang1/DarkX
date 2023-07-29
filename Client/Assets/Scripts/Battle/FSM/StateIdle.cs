@@ -9,6 +9,7 @@ public class StateIdle : IState
 {
     public void Enter(EntityBase entity, params object[] args)
     {
+        entity.skEndCB = -1;
         entity.curAniState = AniState.Idle;
         entity.SetDir(Vector2.zero);
         PECommon.Log("Enter Idle");
@@ -22,14 +23,25 @@ public class StateIdle : IState
     public void Process(EntityBase entity, params object[] args)
     {
         PECommon.Log("Process Idle");
-        if(entity.GetDirInput()!=Vector2.zero)
+        if(entity.nextSkillID!=0)
         {
-            entity.Move();
-            entity.SetDir(entity.GetDirInput());
+            entity.Attack(entity.nextSkillID);
         }
         else
         {
-            entity.ctrl.SetBlend(Const.BlendIdle);
+            if (entity.entityType == EntityType.Player)
+            {
+                entity.canSkill = true;
+            }
+            if (entity.GetDirInput() != Vector2.zero)
+            {
+                entity.Move();
+                entity.SetDir(entity.GetDirInput());
+            }
+            else
+            {
+                entity.ctrl.SetBlend(Const.BlendIdle);
+            }
         }
     }
 }

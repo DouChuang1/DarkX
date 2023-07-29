@@ -17,13 +17,41 @@ public class SkillMgr :MonoBehaviour
     public void AttackEffect(EntityBase entity,int skillID)
     {
         SkillCfg skillCfg = ResSvr.GetSkillCfg(skillID);
+        if(!skillCfg.isCollide)
+        {
+            Physics.IgnoreLayerCollision(9, 10);
+            TimerSvc.Instance.AddTimeTask((int tid) =>
+            {
+                Physics.IgnoreLayerCollision(9, 10, false);
+            }, skillCfg.skillTime);
+        }
+        //玩家才自动锁定 怪物不要那么智能
+        if(entity.entityType== EntityType.Player)
+        {
+            if (entity.GetDirInput() == Vector2.zero)
+            {
+                Vector2 dir = entity.CalcTargetDir();
+                if (dir != Vector2.zero)
+                {
+                    entity.SetAtkRotation(dir);
+                }
+            }
+            else
+            {
+                entity.SetAtkRotation(entity.GetDirInput(), true);
+            }
+        }
         entity.SetAction(skillCfg.aniAction);
 
         entity.SetFX(skillCfg.fx, skillCfg.skillTime);
         CalcSkillMove(entity, skillCfg);
         entity.canControl = false;
         entity.SetDir(Vector2.zero);
-        TimerSvc.Instance.AddTimeTask((int tid) =>
+        if(!skillCfg.isBreak)
+        {
+            entity.entityState = EntityState.BatiState;
+        }
+        entity.skEndCB = TimerSvc.Instance.AddTimeTask((int tid) =>
         {
             entity.Idle();
         }, skillCfg.skillTime);
@@ -41,10 +69,12 @@ public class SkillMgr :MonoBehaviour
             int index = i;
             if(sum>0)
             {
-                TimerSvc.Instance.AddTimeTask((int tid) =>
+                int actionId =TimerSvc.Instance.AddTimeTask((int tid) =>
                 {
                     SkillAction(entity, skillCfg,index);
+                    entity.RemoveActionCB(tid);
                 },sum);
+                entity.skActionCBLst.Add(actionId);
             }
             else
             {
@@ -55,17 +85,29 @@ public class SkillMgr :MonoBehaviour
 
     public void SkillAction(EntityBase entity,SkillCfg skillCfg,int index)
     {
-        List<EntityMonster> monsterLst = entity.battleMgr.GetEntityMonsters();
         SkillActionCfg skillActionCfg = ResSvr.GetSkillActionCfg(skillCfg.skillActionLst[index]);
         int damage = skillCfg.skillDamageLst[index];
-        for(int i=0;i<monsterLst.Count;i++)
+        if (entity.entityType== EntityType.Player)
         {
-            EntityMonster em = monsterLst[i];
-            if(InRange(entity.GetPos(),em.GetPos(),skillActionCfg.radius)&&InAngle(entity.GetTrans(),em.GetPos(),skillActionCfg.angle))
+            List<EntityMonster> monsterLst = entity.battleMgr.GetEntityMonsters();
+            for (int i = 0; i < monsterLst.Count; i++)
             {
-                CalcDamage(entity,em,skillCfg, damage);
+                EntityMonster em = monsterLst[i];
+                if (InRange(entity.GetPos(), em.GetPos(), skillActionCfg.radius) && InAngle(entity.GetTrans(), em.GetPos(), skillActionCfg.angle))
+                {
+                    CalcDamage(entity, em, skillCfg, damage);
+                }
             }
         }
+        else if(entity.entityType== EntityType.Monster)
+        {
+            EntityPlayer player = entity.battleMgr.entityPlayer;
+            if (InRange(entity.GetPos(), player.GetPos(), skillActionCfg.radius) && InAngle(entity.GetTrans(), player.GetPos(), skillActionCfg.angle))
+            {
+                CalcDamage(entity, player, skillCfg, damage);
+            }
+        }
+       
     }
 
     public void CalcDamage(EntityBase caster, EntityBase target,SkillCfg skillCfg, int damage)
@@ -78,6 +120,7 @@ public class SkillMgr :MonoBehaviour
             if(dodgeNum<=target.Props.dodge)
             {
                 PEProtocol.PECommon.Log("闪避Rate:" + dodgeNum + "/" + target.Props.dodge);
+                target.SetDodge();
                 return;
             }
             //计算属性加成
@@ -89,6 +132,7 @@ public class SkillMgr :MonoBehaviour
                 float criticalRate = 1 + (PETools.RDInt(1, 100) / 100.0f);
                 dmgSum = (int)criticalRate * dmgSum;
                 PEProtocol.PECommon.Log("暴击Rate:" + criticalNum + "/" + caster.Props.critical);
+                target.SetCritical(dmgSum);
             }
 
             //计算穿甲
@@ -106,16 +150,21 @@ public class SkillMgr :MonoBehaviour
             dmgSum = 0;
             return;
         }
-
+        target.SetHurt(dmgSum);
         if(target.Hp<dmgSum)
         {
             target.Hp = 0;
             target.Die();
+            target.battleMgr.RemoveMonster(target.Name);
         }
         else
         {
             target.Hp -= dmgSum;
-            target.Hit();
+            if(target.entityState == EntityState.None && target.GetBreakState())
+            {
+                target.Hit();
+            }
+            
         }
             
     }
@@ -163,20 +212,24 @@ public class SkillMgr :MonoBehaviour
             sum += skillMoveCfg.delayTime;
             if (sum > 0)
             {
-                TimerSvc.Instance.AddTimeTask((int tid) =>
+                int moveId =TimerSvc.Instance.AddTimeTask((int tid) =>
                 {
                     entity.SetSkillMoveState(true, speed);
+                    entity.RemoveMoveCB(tid);
                 }, sum);
+                entity.skMoveCBLst.Add(moveId);
             }
             else
             {
                 entity.SetSkillMoveState(true, speed);
             }
             sum += skillMoveCfg.moveTime;
-            TimerSvc.Instance.AddTimeTask((int tid) =>
+            int stopId =TimerSvc.Instance.AddTimeTask((int tid) =>
             {
                 entity.SetSkillMoveState(false);
+                entity.RemoveMoveCB(tid);
             }, sum);
+            entity.skMoveCBLst.Add(stopId);
         }
     }
 }

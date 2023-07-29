@@ -27,7 +27,14 @@ public class PlayerCtrlWnd : WindowRoot {
         pointDis = Screen.height * 1.0f / Const.ScreenPresetHeight * Const.ScreenOpDis;
         defaultPos = imageDirBg.transform.position;
         SetActive(imagDirPoint, false);
+
+        int hp = GameRoot.Instance.PlayerData.hp;
+        SetText(txtSelfHP, hp + "/" + hp);
+        imgSelfHP.fillAmount = 1;
         RegisterTouchEvts();
+        sk1CDTime = resSvr.GetSkillCfg(101).cdTime/1000;
+        sk2CDTime = resSvr.GetSkillCfg(102).cdTime / 1000;
+        sk3CDTime = resSvr.GetSkillCfg(103).cdTime / 1000;
         RefreshUI();
     }
 
@@ -115,17 +122,156 @@ public class PlayerCtrlWnd : WindowRoot {
         BattleSys.instance.ReqReleaseSkill(0);
     }
 
+    public Image imgSk1CD;
+    public Text txtSk1CD;
+    private bool isSk1CD = false;
+    private float sk1CDTime;
+
+    private int sk1Num;
+    private float sk1FillCount;
+    private float sk1NumCount;
+
+    public Image imgSk2CD;
+    public Text txtSk2CD;
+    private bool isSk2CD = false;
+    private float sk2CDTime;
+
+    private int sk2Num;
+    private float sk2FillCount;
+    private float sk2NumCount;
+
+    public Image imgSk3CD;
+    public Text txtSk3CD;
+    private bool isSk3CD = false;
+    private float sk3CDTime;
+
+    private int sk3Num;
+    private float sk3FillCount;
+    private float sk3NumCount;
+
+
+    public Text txtSelfHP;
+    public Image imgSelfHP;
+    private void Update()
+    {
+        float delta = Time.deltaTime;
+        if(isSk1CD)
+        {
+            sk1FillCount+= delta;
+            if(sk1FillCount>=sk1CDTime)
+            {
+                isSk1CD = false;
+                sk1FillCount = 0;
+                SetActive(imgSk1CD, false);
+            }
+            else
+            {
+                imgSk1CD.fillAmount = 1 - sk1FillCount / sk1CDTime;
+            }
+
+            sk1NumCount += delta;
+            if(sk1NumCount>=1)
+            {
+                sk1NumCount -= 1;
+                sk1Num -= 1;
+                SetText(txtSk1CD, sk1Num);
+            }
+        }
+
+        if (isSk2CD)
+        {
+            sk2FillCount += delta;
+            if (sk2FillCount >= sk2CDTime)
+            {
+                isSk2CD = false;
+                sk2FillCount = 0;
+                SetActive(imgSk2CD, false);
+            }
+            else
+            {
+                imgSk2CD.fillAmount = 1 - sk2FillCount / sk2CDTime;
+            }
+
+            sk2NumCount += delta;
+            if (sk2NumCount >= 1)
+            {
+                sk2NumCount -= 1;
+                sk2Num -= 1;
+                SetText(txtSk2CD, sk2Num);
+            }
+        }
+
+
+        if (isSk3CD)
+        {
+            sk3FillCount += delta;
+            if (sk3FillCount >= sk3CDTime)
+            {
+                isSk3CD = false;
+                sk3FillCount = 0;
+                SetActive(imgSk3CD, false);
+            }
+            else
+            {
+                imgSk3CD.fillAmount = 1 - sk3FillCount / sk3CDTime;
+            }
+
+            sk3NumCount += delta;
+            if (sk3NumCount >= 1)
+            {
+                sk3NumCount -= 1;
+                sk3Num -= 1;
+                SetText(txtSk3CD, sk3Num);
+            }
+        }
+    }
+
     public void ClickSkill1()
     {
-        BattleSys.instance.ReqReleaseSkill(1);
+        if(isSk1CD==false && GetCanRlsSkill())
+        {
+            BattleSys.instance.ReqReleaseSkill(1);
+            isSk1CD = true;
+            SetActive(imgSk1CD);
+            imgSk1CD.fillAmount = 1;
+            sk1Num = (int)sk1CDTime;
+            SetText(txtSk1CD, sk1Num);
+        }
+        
     }
     public void ClickSkill2()
     {
-        BattleSys.instance.ReqReleaseSkill(2);
+        if (isSk2CD == false && GetCanRlsSkill())
+        {
+            BattleSys.instance.ReqReleaseSkill(2);
+            isSk2CD = true;
+            SetActive(imgSk2CD);
+            imgSk2CD.fillAmount = 1;
+            sk2Num = (int)sk2CDTime;
+            SetText(txtSk2CD, sk2Num);
+        }
     }
     public void ClickSkill3()
     {
-        BattleSys.instance.ReqReleaseSkill(3);
+        if (isSk3CD == false && GetCanRlsSkill())
+        {
+            BattleSys.instance.ReqReleaseSkill(3);
+            isSk3CD = true;
+            SetActive(imgSk3CD);
+            imgSk3CD.fillAmount = 1;
+            sk3Num = (int)sk3CDTime;
+            SetText(txtSk3CD, sk3Num);
+        }
     }
 
+    public void SetSelfHP(int val)
+    {
+        SetText(txtSelfHP, val + "/" + GameRoot.Instance.PlayerData.hp);
+        imgSelfHP.fillAmount = val * 1.0f / GameRoot.Instance.PlayerData.hp;
+    }
+
+    public bool GetCanRlsSkill()
+    {
+        return BattleSys.instance.battleMgr.CanRlsSkill();
+    }
 }

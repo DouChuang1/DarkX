@@ -16,6 +16,26 @@ public enum DamageType
     AP=2
 }
 
+public enum EntityType
+{
+    None,
+    Player,
+    Monster
+}
+
+public enum EntityState
+{
+    None,
+    BatiState,
+}
+
+public enum MonsterType
+{
+    None,
+    Normal =1,
+    Boss = 2,
+}
+
 public class Const  {
     private const string ColorRed = "<color=#FF0000FF>";
     private const string ColorGreen = "<color=#00FF00FF>";
@@ -50,7 +70,9 @@ public class Const  {
 	public const string BGLogin = "bgLogin";
     public const string BGMainCity = "bgMainCity";
     public const string BGHuangYe = "bgHuangYe";
-    
+    public const string assassin_Hit = "assassin_Hit";
+
+
     public const string UIExtenBtn = "uiExtenBtn";
     public const string UIOpenBtn = "uiOpenPage";
 
@@ -67,9 +89,10 @@ public class Const  {
     public const int ScreenOpDis = 90;
 
     public const int PlayerMoveSpeed = 8;
-    public const int MonsterMoveSpeed = 4;
+    public const int MonsterMoveSpeed = 3;
 
     public const float AccelerSpeed = 5;
+    public const float AccelerHPSpeed = 0.3f;
     public const int BlendIdle = 0;
     public const int BlendWalk = 1;
 
@@ -85,4 +108,5 @@ public class Const  {
     public const int ActionHit = 101;
 
     public const int ActionDefault = -1;
+    public const int ComboSpace = 500;
 }

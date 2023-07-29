@@ -25,7 +25,6 @@ public class GameRoot : MonoBehaviour {
 		{
 			canvas.GetChild(i).gameObject.SetActive(false);
 		}
-		dynamicWnd.SetWndState(true);
 	}
 	
 	void Init()
@@ -55,7 +54,8 @@ public class GameRoot : MonoBehaviour {
 
         //进入登录场景
         loginSys.EnterLogin();
-	}
+        dynamicWnd.SetWndState(true);
+    }
 
 	public static void AddTips(string tip)
 	{

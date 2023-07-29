@@ -30,4 +30,14 @@ public class TimerSvc : SystemRoot {
     {
         return pt.AddTimeTask(callback, delay, timeUnit, count);
     }
+
+    public double GetNowTime()
+    {
+        return pt.GetMillisecondsTime();
+    }
+
+    public void DelTask(int tid)
+    {
+        pt.DeleteTimeTask(tid);
+    }
 }

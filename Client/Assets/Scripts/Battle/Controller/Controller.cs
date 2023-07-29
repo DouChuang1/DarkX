@@ -11,7 +11,8 @@ public class Controller :MonoBehaviour
     private Vector2 dir = Vector2.zero;
     protected bool isMove = false;
     protected Dictionary<string, GameObject> fxDic = new Dictionary<string, GameObject>();
-
+    public Transform hpRoot;
+    public Transform camTrans;
     public virtual void Init()
     {
 
@@ -59,6 +60,20 @@ public class Controller :MonoBehaviour
     {
         skillMove = move;
         skillMoveSpeed = skillSpeed;
+    }
+
+    public virtual void SetAtkRotationCam(Vector2 dir)
+    {
+        float angle = Vector2.SignedAngle(dir, new Vector2(0, 1)) + camTrans.eulerAngles.y;
+        Vector3 eulerAngles = new Vector3(0, angle, 0);
+        transform.localEulerAngles = eulerAngles;
+    }
+
+    public virtual void SetAtkRotationLocal(Vector2 dir)
+    {
+        float angle = Vector2.SignedAngle(dir, new Vector2(0, 1));
+        Vector3 eulerAngles = new Vector3(0, angle, 0);
+        transform.localEulerAngles = eulerAngles;
     }
 
 }

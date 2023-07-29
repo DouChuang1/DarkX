@@ -7,10 +7,12 @@ using UnityEngine.UI;
 public class DynamicWnd : WindowRoot {
 
 	public Animation animation;
+    public Animation selfDodgeAni;
 	public Text text;
+    public Transform hpItemRoot;
 	private bool isTipsShow = false;
 	private Queue<string> tipsQue = new Queue<string>();
-
+    private Dictionary<string, ItemEntityHP> itemDic = new Dictionary<string, ItemEntityHP>();
 	public override void InitWnd()
 	{
 		base.InitWnd();
@@ -57,4 +59,73 @@ public class DynamicWnd : WindowRoot {
 			action();
 		}
 	}
+
+    public void AddHpItemInfo(string mName,Transform trans,int hp)
+    {
+        ItemEntityHP item = null;
+        if(itemDic.TryGetValue(mName, out item))
+        {
+            return;
+        }
+        else
+        {
+            GameObject go = resSvr.LoadPrefab(PathDefine.HPItemPrefab, true);
+            go.transform.SetParent(hpItemRoot);
+            go.transform.localPosition = new Vector3(-1000, 0, 0);
+            ItemEntityHP ieh = go.GetComponent<ItemEntityHP>();
+            ieh.SetItemInfo(trans,hp);
+            itemDic.Add(mName, ieh);
+        }
+    }
+    public void RmvHpItemInfo(string mName)
+    {
+        ItemEntityHP item = null;
+        if (itemDic.TryGetValue(mName, out item))
+        {
+            Destroy(item.gameObject);
+            itemDic.Remove(mName);
+        }
+    }
+
+
+    public void SetDodge(string key)
+    {
+        ItemEntityHP item = null;
+        if(itemDic.TryGetValue(key,out item))
+        {
+            item.SetDodge();
+        }
+    }
+    public void SetCritical(string key,int critical)
+    {
+        ItemEntityHP item = null;
+        if (itemDic.TryGetValue(key, out item))
+        {
+            item.SetCritical(critical);
+        }
+    }
+
+    public void SetHurt(string key,int hurt)
+    {
+        ItemEntityHP item = null;
+        if (itemDic.TryGetValue(key, out item))
+        {
+            item.SetHurt(hurt);
+        }
+    }
+
+    public void SetHpValue(string key, int oldValue,int newValue)
+    {
+        ItemEntityHP item = null;
+        if (itemDic.TryGetValue(key, out item))
+        {
+            item.SetHPVal(oldValue,newValue);
+        }
+    }
+
+    public void SetSelfDodge()
+    {
+        selfDodgeAni.Stop();
+        selfDodgeAni.Play();
+    }
 }

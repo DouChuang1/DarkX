@@ -292,6 +292,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Battle\Controller\Controller.cs" />
+    <Compile Include="Assets\Scripts\Battle\Controller\MonsterController.cs" />
+    <Compile Include="Assets\Scripts\Battle\Entity\EntityBase.cs" />
+    <Compile Include="Assets\Scripts\Battle\Entity\EntityMonster.cs" />
+    <Compile Include="Assets\Scripts\Battle\Entity\EntityPlayer.cs" />
+    <Compile Include="Assets\Scripts\Battle\FSM\IState.cs" />
+    <Compile Include="Assets\Scripts\Battle\FSM\StateAttack.cs" />
+    <Compile Include="Assets\Scripts\Battle\FSM\StateBorn.cs" />
+    <Compile Include="Assets\Scripts\Battle\FSM\StateDie.cs" />
+    <Compile Include="Assets\Scripts\Battle\FSM\StateHit.cs" />
+    <Compile Include="Assets\Scripts\Battle\FSM\StateIdle.cs" />
+    <Compile Include="Assets\Scripts\Battle\FSM\StateMove.cs" />
+    <Compile Include="Assets\Scripts\Battle\Manager\BattleMgr.cs" />
+    <Compile Include="Assets\Scripts\Battle\Manager\MapMgr.cs" />
+    <Compile Include="Assets\Scripts\Battle\Manager\SkillMgr.cs" />
+    <Compile Include="Assets\Scripts\Battle\Manager\StateMgr.cs" />
     <Compile Include="Assets\Scripts\Common\BaseData.cs" />
     <Compile Include="Assets\Scripts\Common\Const.cs" />
     <Compile Include="Assets\Scripts\Common\PathDefine.cs" />
@@ -300,18 +316,32 @@
     <Compile Include="Assets\Scripts\Common\SystemRoot.cs" />
     <Compile Include="Assets\Scripts\Common\WindowRoot.cs" />
     <Compile Include="Assets\Scripts\GameRoot.cs" />
+    <Compile Include="Assets\Scripts\MainCityMap.cs" />
     <Compile Include="Assets\Scripts\Net\ClientSession.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Service\AudioSvc.cs" />
     <Compile Include="Assets\Scripts\Service\NetSvc.cs" />
+    <Compile Include="Assets\Scripts\Service\PETimer.cs" />
     <Compile Include="Assets\Scripts\Service\ResSvr.cs" />
+    <Compile Include="Assets\Scripts\Service\TimerSvc.cs" />
+    <Compile Include="Assets\Scripts\System\BattleSys.cs" />
+    <Compile Include="Assets\Scripts\System\FubenSys.cs" />
     <Compile Include="Assets\Scripts\System\LoginSys.cs" />
     <Compile Include="Assets\Scripts\System\MainCitySys.cs" />
+    <Compile Include="Assets\Scripts\UIWindow\BuyWnd.cs" />
+    <Compile Include="Assets\Scripts\UIWindow\ChatWnd.cs" />
     <Compile Include="Assets\Scripts\UIWindow\CreateRoleWnd.cs" />
     <Compile Include="Assets\Scripts\UIWindow\DynamicWnd.cs" />
+    <Compile Include="Assets\Scripts\UIWindow\FubenWnd.cs" />
+    <Compile Include="Assets\Scripts\UIWindow\GuideWnd.cs" />
+    <Compile Include="Assets\Scripts\UIWindow\InfoWnd.cs" />
+    <Compile Include="Assets\Scripts\UIWindow\ItemEntityHP.cs" />
     <Compile Include="Assets\Scripts\UIWindow\LoadingWnd.cs" />
     <Compile Include="Assets\Scripts\UIWindow\LoginWnd.cs" />
     <Compile Include="Assets\Scripts\UIWindow\MainCityWnd.cs" />
+    <Compile Include="Assets\Scripts\UIWindow\PlayerCtrlWnd.cs" />
+    <Compile Include="Assets\Scripts\UIWindow\StrongWnd.cs" />
+    <Compile Include="Assets\Scripts\UIWindow\TaskWnd.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Compond\MakeChar\Shader\MogoFakeLight.shader" />
@@ -320,8 +350,15 @@
     <None Include="Assets\Compond\Shader\MogoSkybox.shader" />
     <None Include="Assets\Compond\Shader\MonsterShader.shader" />
     <None Include="Assets\Compond\Shader\Mul-skybox.shader" />
+    <None Include="Assets\Resources\ResCfgs\guide.xml" />
     <None Include="Assets\Resources\ResCfgs\map.xml" />
+    <None Include="Assets\Resources\ResCfgs\monster.xml" />
     <None Include="Assets\Resources\ResCfgs\rdname.xml" />
+    <None Include="Assets\Resources\ResCfgs\skill.xml" />
+    <None Include="Assets\Resources\ResCfgs\skillaction.xml" />
+    <None Include="Assets\Resources\ResCfgs\skillmove.xml" />
+    <None Include="Assets\Resources\ResCfgs\strong.xml" />
+    <None Include="Assets\Resources\ResCfgs\taskreward.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

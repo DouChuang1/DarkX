@@ -135,6 +135,9 @@ public class NetSvc : MonoBehaviour
             case CMD.RspFBFight:
                 FubenSys.instance.RspFBFight(msg);
                 break;
+            case CMD.RspFBFightEnd:
+                BattleSys.instance.RspFBFightEnd(msg);
+                break;
         }
     }
 }

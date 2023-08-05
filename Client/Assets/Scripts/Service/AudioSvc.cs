@@ -34,4 +34,12 @@ public class AudioSvc : MonoBehaviour {
         uiSource.Play();
     }
 
+    public void StopBGMusic()
+    {
+        if(bgSource!=null)
+        {
+            bgSource.Stop();
+        }
+    }
+
 }

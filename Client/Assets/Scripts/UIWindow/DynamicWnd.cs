@@ -128,4 +128,13 @@ public class DynamicWnd : WindowRoot {
         selfDodgeAni.Stop();
         selfDodgeAni.Play();
     }
+
+    public void RmvAllHPItemInfo()
+    {
+        foreach(var item in itemDic)
+        {
+            Destroy(item.Value.gameObject);
+        }
+        itemDic.Clear();
+    }
 }

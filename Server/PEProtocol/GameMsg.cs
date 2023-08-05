@@ -27,6 +27,9 @@ namespace PEProtocol
 
         public ReqFBFight reqFBFight;
         public RspFBFight rspFBFight;
+
+        public ReqFBFightEnd reqFBFightEnd;
+        public RspFBFightEnd rspFBFightEnd;
     }
 
     [Serializable]
@@ -160,6 +163,30 @@ namespace PEProtocol
     }
 
     [Serializable]
+    public class ReqFBFightEnd
+    {
+        public bool win;
+        public int fbid;
+        public int resthp;
+        public int costtime;
+    }
+
+    [Serializable]
+    public class RspFBFightEnd
+    {
+        public bool win;
+        public int fbid;
+        public int resthp;
+        public int costtime;
+
+        public int coin;
+        public int lv;
+        public int crystal;
+        public int exp;
+        public int fuben;
+    }
+
+    [Serializable]
     public class ReqTakeTaskReward
     {
         public int rid;
@@ -222,6 +249,9 @@ namespace PEProtocol
         PshTaskPrgs = 211,
         ReqFBFight = 301,
         RspFBFight = 302,
+
+        ReqFBFightEnd = 303,
+        RspFBFightEnd = 304,
     }
 
     public class SrvCfg

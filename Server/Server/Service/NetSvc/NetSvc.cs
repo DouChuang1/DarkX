@@ -78,6 +78,9 @@ public class NetSvc
             case CMD.ReqFBFight:
                 FubenSys.Instance.ReqFubenFight(msg);
                 break;
+            case CMD.ReqFBFightEnd:
+                FubenSys.Instance.ReqFubenFightEnd(msg);
+                break;
         }
     }
 }

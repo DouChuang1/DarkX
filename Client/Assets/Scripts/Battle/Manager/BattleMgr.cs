@@ -14,6 +14,7 @@ public class BattleMgr:MonoBehaviour
     public EntityPlayer entityPlayer;
     private MapCfg mapCfg;
     private Dictionary<string, EntityMonster> monsterDic = new Dictionary<string, EntityMonster>();
+    public bool isPauseGame = false;
     public void Init(int mapId,Action cb)
     {
         ResSvr = ResSvr.instance;
@@ -44,7 +45,7 @@ public class BattleMgr:MonoBehaviour
              }
          });
     }
-
+    public bool triggerCheck = true;
     public void Update()
     {
         foreach(var item in monsterDic)
@@ -52,6 +53,26 @@ public class BattleMgr:MonoBehaviour
             EntityMonster em = item.Value;
             em.TickAILogic();
         }
+        if(MapMgr!=null)
+        {
+            if(triggerCheck && monsterDic.Count==0)
+            {
+                bool isExist = MapMgr.SetNextTriggerOn();
+                triggerCheck = false;
+                if(!isExist)
+                {
+                    //关卡结束 
+                    EndBattle(true, entityPlayer.Hp);
+                }
+            }
+        }
+    }
+
+    public void EndBattle(bool isWin,int restHP)
+    {
+        isPauseGame = true;
+        AudioSvc.Instance.StopBGMusic();
+        BattleSys.instance.EndBattle(isWin, restHP);
     }
 
     public void LoadPlayer(MapCfg mapCfg)
@@ -112,7 +133,14 @@ public class BattleMgr:MonoBehaviour
                 em.SetCtrl(mc);
                 m.SetActive(false);
                 monsterDic.Add(m.name, em);
-                GameRoot.Instance.dynamicWnd.AddHpItemInfo(m.name,em.ctrl.hpRoot, em.Hp);
+                if(md.mCfg.mType== MonsterType.Normal)
+                {
+                    GameRoot.Instance.dynamicWnd.AddHpItemInfo(m.name, em.ctrl.hpRoot, em.Hp);
+                }
+                else if(md.mCfg.mType== MonsterType.Boss)
+                {
+                    BattleSys.instance.PlayerCtrlWnd.SetBossHPBarState(true);
+                }
             }
         }
     }

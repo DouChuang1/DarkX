@@ -9,6 +9,9 @@ public class BattleSys : SystemRoot
     public static BattleSys instance;
     public PlayerCtrlWnd PlayerCtrlWnd;
     public BattleMgr battleMgr;
+    public BattleEndWnd BattleEndWnd;
+    private int fbid;
+    private double startTime;
     public override void InitSys()
     {
         base.InitSys();
@@ -18,6 +21,7 @@ public class BattleSys : SystemRoot
 
     public void StartBattle(int mapId)
     {
+        fbid = mapId;
         GameObject go = new GameObject
         {
             name = "BattleRoot"
@@ -28,6 +32,7 @@ public class BattleSys : SystemRoot
         battleMgr.Init(mapId,()=>
         {
             SetPlayerCtrlWndState(true);
+            startTime = TimerSvc.GetNowTime();
         });
        
     }
@@ -50,5 +55,53 @@ public class BattleSys : SystemRoot
     public Vector2 GetDirInput()
     {
         return PlayerCtrlWnd.currentDir;
+    }
+
+    public void EndBattle(bool isWin,int restHP)
+    {
+        PlayerCtrlWnd.SetWndState(false);
+        GameRoot.Instance.dynamicWnd.RmvAllHPItemInfo();
+        if(isWin)
+        {
+            double endTime = TimerSvc.GetNowTime();
+            GameMsg msg = new GameMsg
+            {
+                cmd = (int)CMD.ReqFBFightEnd,
+                reqFBFightEnd = new ReqFBFightEnd
+                {
+                    win = isWin,
+                    fbid = fbid,
+                    resthp = restHP,
+                    costtime = (int)((endTime - startTime) / 1000)
+                }
+            };
+            NetSvc.SendMsg(msg);
+        }
+        else
+        {
+            SetBattleEndWndState(FBEndType.Lose, true);
+        }
+    }
+
+    public void RspFBFightEnd(GameMsg msg)
+    {
+        RspFBFightEnd data = msg.rspFBFightEnd;
+        GameRoot.Instance.SetPlayerDataByFBEnd(data);
+        BattleEndWnd.SetBattleEndData(data.fbid, data.costtime, data.resthp);
+        SetBattleEndWndState(FBEndType.Win);
+    }
+
+    public void SetBattleEndWndState(FBEndType endType, bool isActive=true)
+    {
+        BattleEndWnd.SewtWndType(endType);
+        BattleEndWnd.SetWndState(isActive);
+    }
+
+    public void DistroyBattle()
+    {
+        SetPlayerCtrlWndState(false);
+        SetBattleEndWndState(FBEndType.None, false);
+        GameRoot.Instance.dynamicWnd.RmvAllHPItemInfo();
+        Destroy(battleMgr.gameObject);
     }
 }

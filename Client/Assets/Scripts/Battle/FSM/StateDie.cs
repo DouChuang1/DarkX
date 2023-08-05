@@ -8,6 +8,7 @@ public class StateDie : IState
     public void Enter(EntityBase entity, params object[] args)
     {
         entity.curAniState = AniState.Die;
+        entity.RemoveSkillCB();
     }
 
     public void Exit(EntityBase entity, params object[] args)
@@ -20,7 +21,12 @@ public class StateDie : IState
         entity.SetAction(Const.ActionDie);
         TimerSvc.Instance.AddTimeTask((int id) =>
         {
-            entity.SetActive(false);
+            if(entity.entityType== EntityType.Monster)
+            {
+                entity.SetActive(false);
+                entity.GetCC().enabled = false;
+            }
+                
         }, 5000);
     }
 }

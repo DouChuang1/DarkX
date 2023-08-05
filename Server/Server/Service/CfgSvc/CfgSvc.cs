@@ -15,6 +15,9 @@ public class BaseData<T>
 public class MapCfg : BaseData<MapCfg>
 {
     public int power;
+    public int coin;
+    public int exp;
+    public int crystal;
 }
 
 
@@ -88,6 +91,15 @@ public class CfgSvc
                 {
                     case "power":
                         mapCfg.power = int.Parse(e.InnerText);
+                        break;
+                    case "coin":
+                        mapCfg.coin = int.Parse(e.InnerText);
+                        break;
+                    case "exp":
+                        mapCfg.exp = int.Parse(e.InnerText);
+                        break;
+                    case "crystal":
+                        mapCfg.crystal = int.Parse(e.InnerText);
                         break;
                 }
             }

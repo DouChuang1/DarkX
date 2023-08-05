@@ -157,12 +157,27 @@ Prefab:
       propertyPath: m_TagString
       value: MapRoot
       objectReference: {fileID: 0}
+    - target: {fileID: 65780809632693620, guid: 27c218ae828bcf3489f337ea4eebb747,
+        type: 2}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 65819714106535496, guid: 27c218ae828bcf3489f337ea4eebb747,
+        type: 2}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 27c218ae828bcf3489f337ea4eebb747, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &386047932 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100428, guid: 27c218ae828bcf3489f337ea4eebb747, type: 2}
+  m_PrefabInternal: {fileID: 386047931}
+--- !u!1 &386047933 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1986553909874128, guid: 27c218ae828bcf3489f337ea4eebb747,
+    type: 2}
   m_PrefabInternal: {fileID: 386047931}
 --- !u!114 &386047934
 MonoBehaviour:
@@ -175,6 +190,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e63cc6f906cd04343b9b91e8269f61db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BattleMgr: {fileID: 0}
+  triggerArr:
+  - {fileID: 386047937}
+  - {fileID: 386047936}
+--- !u!1 &386047935 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1568722264195668, guid: 27c218ae828bcf3489f337ea4eebb747,
+    type: 2}
+  m_PrefabInternal: {fileID: 386047931}
+--- !u!114 &386047936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 386047933}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 905eff47d9b5ecc42bf90ada8d3a6843, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerWave: 3
+  mapMgr: {fileID: 386047934}
+--- !u!114 &386047937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 386047935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 905eff47d9b5ecc42bf90ada8d3a6843, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerWave: 2
+  mapMgr: {fileID: 386047934}
 --- !u!1001 &777482047
 Prefab:
   m_ObjectHideFlags: 0

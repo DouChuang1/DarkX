@@ -71,8 +71,12 @@ public class SkillMgr :MonoBehaviour
             {
                 int actionId =TimerSvc.Instance.AddTimeTask((int tid) =>
                 {
-                    SkillAction(entity, skillCfg,index);
-                    entity.RemoveActionCB(tid);
+                    if(entity!=null)
+                    {
+                        SkillAction(entity, skillCfg, index);
+                        entity.RemoveActionCB(tid);
+                    }
+                   
                 },sum);
                 entity.skActionCBLst.Add(actionId);
             }
@@ -102,6 +106,8 @@ public class SkillMgr :MonoBehaviour
         else if(entity.entityType== EntityType.Monster)
         {
             EntityPlayer player = entity.battleMgr.entityPlayer;
+            if (player == null)
+                return;
             if (InRange(entity.GetPos(), player.GetPos(), skillActionCfg.radius) && InAngle(entity.GetTrans(), player.GetPos(), skillActionCfg.angle))
             {
                 CalcDamage(entity, player, skillCfg, damage);
@@ -155,7 +161,15 @@ public class SkillMgr :MonoBehaviour
         {
             target.Hp = 0;
             target.Die();
-            target.battleMgr.RemoveMonster(target.Name);
+            if(target.entityType== EntityType.Monster)
+            {
+                target.battleMgr.RemoveMonster(target.Name);
+            }
+            else if(target.entityType == EntityType.Player)
+            {
+                target.battleMgr.EndBattle(false, 0);
+                target.battleMgr.entityPlayer = null;
+            }
         }
         else
         {

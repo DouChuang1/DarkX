@@ -31,6 +31,7 @@ public class PlayerCtrlWnd : WindowRoot {
         int hp = GameRoot.Instance.PlayerData.hp;
         SetText(txtSelfHP, hp + "/" + hp);
         imgSelfHP.fillAmount = 1;
+        SetBossHPBarState(false);
         RegisterTouchEvts();
         sk1CDTime = resSvr.GetSkillCfg(101).cdTime/1000;
         sk2CDTime = resSvr.GetSkillCfg(102).cdTime / 1000;
@@ -224,6 +225,12 @@ public class PlayerCtrlWnd : WindowRoot {
                 SetText(txtSk3CD, sk3Num);
             }
         }
+
+        if(transBossHPBar.gameObject.activeSelf)
+        {
+            BlendBossHP();
+            imgYellow.fillAmount = currentPrg;
+        }
     }
 
     public void ClickSkill1()
@@ -273,5 +280,49 @@ public class PlayerCtrlWnd : WindowRoot {
     public bool GetCanRlsSkill()
     {
         return BattleSys.instance.battleMgr.CanRlsSkill();
+    }
+
+    public Transform transBossHPBar;
+    public Image imgRed;
+    public Image imgYellow;
+
+    private float currentPrg = 1;
+    private float targetPrg = 1;
+
+    public void SetBossHPBarState(bool state,float prg=1)
+    {
+        SetActive(transBossHPBar, state);
+        imgRed.fillAmount = 1;
+        imgYellow.fillAmount = 1;
+    }
+
+    public void SetBossHPBarVal(int oldVal,int newVal,int sumVal)
+    {
+        currentPrg = oldVal * 1.0f / sumVal;
+        targetPrg = newVal * 1.0f / sumVal;
+
+        imgRed.fillAmount = targetPrg;
+    }
+
+    private void BlendBossHP()
+    {
+        if (Mathf.Abs(currentPrg - targetPrg) < Const.AccelerHPSpeed * Time.deltaTime)
+        {
+            currentPrg = targetPrg;
+        }
+        else if (currentPrg > targetPrg)
+        {
+            currentPrg -= Const.AccelerHPSpeed * Time.deltaTime;
+        }
+        else
+        {
+            currentPrg += Const.AccelerHPSpeed * Time.deltaTime;
+        }
+    }
+
+    public void ClickHeadBtn()
+    {
+        BattleSys.instance.battleMgr.isPauseGame = true;
+        BattleSys.instance.SetBattleEndWndState(FBEndType.Pause, true);
     }
 }

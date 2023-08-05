@@ -252,6 +252,11 @@ public class EntityBase
         return ctrl.GetComponent<AudioSource>();
     }
 
+    public CharacterController GetCC()
+    {
+        return ctrl.GetComponent<CharacterController>();
+    }
+
     public void RemoveMoveCB(int tid)
     {
         int index = -1;
@@ -291,5 +296,36 @@ public class EntityBase
     public virtual bool GetBreakState()
     {
         return true;
+    }
+
+    public void RemoveSkillCB()
+    {
+        SetDir(Vector2.zero);
+        SetSkillMoveState(false);
+
+        //被攻击 中断自己的攻击流程
+        for (int i = 0; i < skMoveCBLst.Count; i++)
+        {
+            int tid = skMoveCBLst[i];
+            TimerSvc.Instance.DelTask(tid);
+        }
+        for (int i = 0; i < skActionCBLst.Count; i++)
+        {
+            int tid = skActionCBLst[i];
+            TimerSvc.Instance.DelTask(tid);
+        }
+        if (skEndCB != -1)
+        {
+            TimerSvc.Instance.DelTask(skEndCB);
+            skEndCB = -1;
+        }
+
+        if (nextSkillID != 0 || comboQue.Count > 0)
+        {
+            nextSkillID = 0;
+            comboQue.Clear();
+            battleMgr.lastAtkTime = 0;
+            battleMgr.comboIndex = 0;
+        }
     }
 }

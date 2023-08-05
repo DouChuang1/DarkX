@@ -42,6 +42,7 @@ public class MainCitySys : SystemRoot {
              GameObject map = GameObject.FindGameObjectWithTag("MapRoot");
              MainCityMap mainCityMap = map.GetComponent<MainCityMap>();
              npcPosTrans = mainCityMap.NpcPosTrans;
+             GameRoot.Instance.GetComponent<AudioListener>().enabled = false;
              if(charCamTrans)
              {
                  charCamTrans.gameObject.SetActive(false);

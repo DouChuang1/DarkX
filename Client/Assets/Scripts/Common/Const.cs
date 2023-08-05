@@ -71,7 +71,10 @@ public class Const  {
     public const string BGMainCity = "bgMainCity";
     public const string BGHuangYe = "bgHuangYe";
     public const string assassin_Hit = "assassin_Hit";
+    public const string FBItemEnter = "fbitem";
 
+    public const string FBLose = "fblose";
+    public const string FBLogoEnter = "fbwin";
 
     public const string UIExtenBtn = "uiExtenBtn";
     public const string UIOpenBtn = "uiOpenPage";
